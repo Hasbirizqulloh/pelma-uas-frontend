@@ -12,8 +12,8 @@ const Login = () => {
   const { user, isError, isSuccess, isLoading, message } = useSelector((state) => state.auth);
 
   useEffect(() => {
-    if (user && (isSuccess || user.role)) {
-      // Periksa peran pengguna dan arahkan sesuai
+    if (user || isSuccess) {
+      // Check user role and navigate accordingly
       if (user.role === 'user') {
         navigate('/dashboard');
       } else if (user.role === 'admin') {

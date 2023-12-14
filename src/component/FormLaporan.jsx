@@ -13,8 +13,11 @@ const FormLaporan = () => {
   const saveReport = async (e) => {
     e.preventDefault();
     try {
-      await axios.post('http://localhost:5000/reports', {
+      await axios.post('http://hasbi-api.faikarmocht.my.id/reports', {
         report_content: report,
+        headers: {
+          'content-type': 'application/json',
+        },
       });
       setMsg('Berhasil');
       console.log(msg);

@@ -16,6 +16,9 @@ export const SignUpUser = createAsyncThunk('user/SignUp', async (user, thunkAPI)
       email: user.email,
       password: user.password,
       confPassword: user.confPassword,
+      headers: {
+        'content-type': 'application/json',
+      },
     });
     return response.data;
   } catch (error) {
@@ -31,6 +34,9 @@ export const LoginUser = createAsyncThunk('user/LoginUser', async (user, thunkAP
     const response = await axios.post('https://hasbi-api.faikarmocht.my.id/login', {
       email: user.email,
       password: user.password,
+      headers: {
+        'content-type': 'application/json',
+      },
     });
     return response.data;
   } catch (error) {
@@ -43,7 +49,11 @@ export const LoginUser = createAsyncThunk('user/LoginUser', async (user, thunkAP
 
 export const getMe = createAsyncThunk('user/getMe', async (_, thunkAPI) => {
   try {
-    const response = await axios.get('https://hasbi-api.faikarmocht.my.id/me');
+    const response = await axios.get('https://hasbi-api.faikarmocht.my.id/me', {
+      headers: {
+        'content-type': 'application/json',
+      },
+    });
     return response.data;
   } catch (error) {
     if (error.response) {
@@ -54,7 +64,11 @@ export const getMe = createAsyncThunk('user/getMe', async (_, thunkAPI) => {
 });
 
 export const LogOut = createAsyncThunk('user/LogOut', async () => {
-  await axios.delete('https://hasbi-api.faikarmocht.my.id/logout');
+  await axios.delete('https://hasbi-api.faikarmocht.my.id/logout', {
+    headers: {
+      'content-type': 'application/json',
+    },
+  });
 });
 
 export const authSlice = createSlice({

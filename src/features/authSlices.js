@@ -35,7 +35,8 @@ export const LoginUser = createAsyncThunk('user/LoginUser', async (user, thunkAP
       email: user.email,
       password: user.password,
       headers: {
-        'content-type': 'application/json',
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE,PATCH,OPTIONS',
       },
     });
     return response.data;

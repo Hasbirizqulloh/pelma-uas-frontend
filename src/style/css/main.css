@@ -443,30 +443,30 @@
   margin: 15px 0;
 }
 
-/* .card {
+.cards {
   display: flex;
   flex-direction: column;
   justify-content: space-around;
   padding: 8px 15px;
   border-radius: 5px;
   color: #fff;
-} */
-
-/* .card:first-child {
-  background-color: #fff;
 }
 
-.card:nth-child(2) {
+.cards:first-child {
+  background-color: #31d398;
+}
+
+.cards:nth-child(2) {
   background-color: #ff6d00;
 }
 
-.card:nth-child(3) {
+.cards:nth-child(3) {
   background-color: #2e7d32;
 }
 
-.card:nth-child(4) {
+.cards:nth-child(4) {
   background-color: #d50000;
-} */
+}
 
 /* HomeAdmin */
 

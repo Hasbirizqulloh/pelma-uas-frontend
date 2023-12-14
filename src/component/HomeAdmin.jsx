@@ -11,28 +11,28 @@ const HomeAdmin = () => {
       </div>
 
       <div className="main-cards">
-        <div className="card">
+        <div className="cards">
           <div className="card-inner">
             <h3>USER</h3>
             <BsFillArchiveFill className="card_icon" />
           </div>
           <h1>300</h1>
         </div>
-        <div className="card">
+        <div className="cards">
           <div className="card-inner">
             <h3>LAPORAN</h3>
             <BsFillGrid3X3GapFill className="card_icon" />
           </div>
           <h1>12</h1>
         </div>
-        <div className="card">
+        <div className="cards">
           <div className="card-inner">
             <h3>KOMUNITAS</h3>
             <BsPeopleFill className="card_icon" />
           </div>
           <h1>33</h1>
         </div>
-        <div className="card">
+        <div className="cards">
           <div className="card-inner">
             <h3>TINDAKAN</h3>
             <BsFillBellFill className="card_icon" />

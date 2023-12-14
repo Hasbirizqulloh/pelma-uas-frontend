@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import { SignUpUser } from '../features/authSlices';
 import banner from '../assets/undraw_nature_on_screen_xkli.svg';
 
@@ -63,7 +63,7 @@ const Signup = () => {
             </div>
             <div className="account-login">
               <label htmlFor="">
-                Already have an account? <a href="/">Login</a>
+                Already have an account? <NavLink to={'/'}>Login</NavLink>
               </label>
             </div>
           </form>

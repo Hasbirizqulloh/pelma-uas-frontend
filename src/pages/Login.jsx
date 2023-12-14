@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import { LoginUser, reset } from '../features/authSlices';
 import banner from '../assets/undraw_nature_on_screen_xkli.svg';
 
@@ -50,7 +50,7 @@ const Login = () => {
             </div>
             <div className="account-login">
               <label htmlFor="">
-                Belum Memiliki Akun? <a href="/signup">Signup</a>
+                Belum Memiliki Akun? <NavLink to={'/signup'}>Signup</NavLink>
               </label>
             </div>
           </form>

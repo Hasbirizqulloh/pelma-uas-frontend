@@ -21,6 +21,8 @@ const Login = () => {
       }
     }
     dispatch(reset());
+    console.log('gagal login');
+    console.log(user.role);
   }, [user, isSuccess, dispatch, navigate]);
 
   const Auth = (e) => {

@@ -34,9 +34,6 @@ export const LoginUser = createAsyncThunk('user/LoginUser', async (user, thunkAP
     const response = await axios.post('https://hasbi-api.faikarmocht.my.id/login', {
       email: user.email,
       password: user.password,
-      headers: {
-        'content-type': 'application/json',
-      },
     });
     return response.data;
   } catch (error) {

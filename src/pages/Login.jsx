@@ -61,7 +61,7 @@ const Login = () => {
               </label>
             </div>
             <div className="account-login">
-              <label htmlFor="">Backendnya belum jalan karena ada masalah pada hosting API, saya menggunakan nodejs dan masih mencari solusinya</label>
+              <label htmlFor="">Backendnya belum jalan karena ada masalah pada hosting API, saya menggunakan nodejs dan masih mencari solusinya berikut backendnya https://github.com/Hasbirizqulloh/api-ku.git</label>
             </div>
           </form>
         </div>

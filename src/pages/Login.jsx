@@ -44,14 +44,24 @@ const Login = () => {
               <label htmlFor="">Password</label>
             </div>
             <div className="input-box">
-              <button type="submit" className="button">
-                {isLoading ? 'Loading...' : 'Masuk'}
-              </button>
+              <NavLink to={'/dashboard'}>
+                <button type="submit" className="button">
+                  {isLoading ? 'Loading...' : 'Masuk'}
+                </button>
+              </NavLink>
+            </div>
+            <div className="account-login">
+              <label htmlFor="">
+                Belum Memiliki Akun? <NavLink to={'/dashboardadmin'}>Masuk ke dashboard admin</NavLink>
+              </label>
             </div>
             <div className="account-login">
               <label htmlFor="">
                 Belum Memiliki Akun? <NavLink to={'/signup'}>Signup</NavLink>
               </label>
+            </div>
+            <div className="account-login">
+              <label htmlFor="">Backendnya belum jalan karena ada masalah pada hosting API, saya menggunakan nodejs dan masih mencari solusinya</label>
             </div>
           </form>
         </div>

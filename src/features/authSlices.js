@@ -25,6 +25,15 @@ export const loginUser = async (loginData) => {
   }
 };
 
+export const SignUpUser = async (signupData) => {
+  try {
+    const response = await axios.post(`${API_URL}/api/users`, signupData);
+    return response.data;
+  } catch (error) {
+    throw error.response ? error.response.data : error.message;
+  }
+};
+
 export const authSlice = createSlice({
   name: 'auth',
   initialState,

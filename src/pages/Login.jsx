@@ -44,11 +44,9 @@ const Login = () => {
               <label htmlFor="">Password</label>
             </div>
             <div className="input-box">
-              <NavLink>
-                <button type="submit" className="button">
-                  {isLoading ? 'Loading...' : 'Masuk'}
-                </button>
-              </NavLink>
+              <button type="submit" className="button">
+                {isLoading ? 'Loading...' : 'Masuk'}
+              </button>
             </div>
             <div className="account-login">
               <label htmlFor="">

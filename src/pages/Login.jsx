@@ -1,38 +1,50 @@
 import React, { useState, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 import { NavLink, useNavigate } from 'react-router-dom';
-import { LoginUser, reset } from '../features/authSlices';
 import banner from '../assets/undraw_nature_on_screen_xkli.svg';
+import { loginUser } from '../features/authSlices';
 
 const Login = () => {
+  const navigate = useNavigate();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
-  const { user, isError, isSuccess, isLoading, message } = useSelector((state) => state.auth);
+  const [isLoading, setIsLoading] = useState(false);
+  const [isError, setIsError] = useState(false);
+  const [message, setMessage] = useState('');
 
-  useEffect(() => {
-    if (user || isSuccess) {
-      // Check user role and navigate accordingly
-      if (user.role === 'user') {
-        navigate('/dashboard');
-      } else if (user.role === 'admin') {
-        navigate('/dashboardadmin');
-      }
-    }
-    dispatch(reset());
-  }, [user, isSuccess, dispatch, navigate]);
-
-  const Auth = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
-    dispatch(LoginUser({ email, password }));
+
+    // Show loading state
+    setIsLoading(true);
+    setIsError(false);
+
+    try {
+      // Call the loginUser function from authSlices with the login data
+      const response = await loginUser({ email, password });
+
+      // Assuming the loginUser function returns a token
+      const token = response.token;
+
+      // Handle successful login, you can save the token to local storage or context
+      localStorage.setItem('Authorization', token);
+
+      // Redirect to a different page after successful login
+      navigate('/dashboard');
+    } catch (error) {
+      // Handle login error
+      setIsError(true);
+      setMessage(error);
+    } finally {
+      // Hide loading state
+      setIsLoading(false);
+    }
   };
 
   return (
     <div className="login-page">
       <div className="login-container">
         <div className="login-section">
-          <form onSubmit={Auth} className="form">
+          <form onSubmit={handleLogin} className="form">
             {isError && <p className="has-text-centered">{message}</p>}
             <h2>Login</h2>
             <div className="input-box">

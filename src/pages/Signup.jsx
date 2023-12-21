@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { NavLink, useNavigate } from 'react-router-dom';
-// import { SignUpUser } from '../features/authSlices';
+
 import banner from '../assets/undraw_nature_on_screen_xkli.svg';
 
 const Signup = () => {

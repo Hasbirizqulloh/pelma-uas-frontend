@@ -21,17 +21,23 @@ const Login = () => {
     try {
       // Call the loginUser function from authSlices with the login data
       const response = await loginUser({ email, password });
-
-      // Assuming the loginUser function returns a token
       const token = response.data.token;
       const role = response.data.role;
-      console.log('role :' + role);
-      console.log('token:' + token);
-      // Handle successful login, you can save the token to local storage or context
-      localStorage.setItem('Authorization', token);
+      if (response) {
+        // Handle successful login, you can save the token to local storage or context
+        localStorage.setItem('Authorization', token);
+        localStorage.setItem('role', role);
 
-      // Redirect to a different page after successful login
-      navigate('/dashboard');
+        alert('Login successful');
+
+        if (role === 'admin') {
+          navigate('/dashboardadmin');
+        } else {
+          navigate('/dashboard');
+        }
+      } else {
+        alert('Login failed');
+      }
     } catch (error) {
       // Handle login error
       setIsError(true);

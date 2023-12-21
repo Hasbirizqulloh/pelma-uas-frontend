@@ -5,6 +5,8 @@ import axios from 'axios';
 import { createRoot } from 'react-dom/client';
 import { Provider } from 'react-redux';
 import { store } from './app/store';
+axios.defaults.baseURL = 'https://api-jadi-fix.vercel.app';
+axios.defaults.withCredentials = true;
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './style/css/main.css';

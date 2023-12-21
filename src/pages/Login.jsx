@@ -23,7 +23,7 @@ const Login = () => {
       const response = await loginUser({ email, password });
 
       // Assuming the loginUser function returns a token
-      const token = response.token;
+      const token = response.data.token;
       console.log(token);
       // Handle successful login, you can save the token to local storage or context
       localStorage.setItem('Authorization', token);

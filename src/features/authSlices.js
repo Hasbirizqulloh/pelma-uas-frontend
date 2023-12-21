@@ -31,7 +31,7 @@ export const SignUpUser = createAsyncThunk('user/SignUp', async (user, thunkAPI)
 
 export const LoginUser = createAsyncThunk('user/LoginUser', async (user, thunkAPI) => {
   try {
-    const response = await axios.post('https://hasbi-api.faikarmocht.my.id/login', {
+    const response = await axios.post('https://api-jadi-fix.vercel.app/api/users/login', {
       email: user.email,
       password: user.password,
       headers: {

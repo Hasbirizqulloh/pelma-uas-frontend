@@ -2,7 +2,6 @@ import React, { useEffect } from 'react';
 import SidebarComponent from '../component/SidebarComponent';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { getMe } from '../features/authSlices';
 
 const Poin = () => {
   const dispatch = useDispatch();

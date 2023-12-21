@@ -4,7 +4,6 @@ import { CgLogOut } from 'react-icons/cg';
 import { AiOutlineUser } from 'react-icons/ai';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { LogOut, reset } from '../features/authSlices';
 import aset from '../assets/react.svg';
 
 const SidebarComponentAdmin = ({ children }) => {

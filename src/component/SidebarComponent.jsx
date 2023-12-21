@@ -3,7 +3,6 @@ import { FaTh, FaBars, FaUserAlt, FaRegChartBar, FaCommentAlt } from 'react-icon
 import { CgLogOut } from 'react-icons/cg';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { LogOut, reset } from '../features/authSlices';
 import aset from '../assets/react.svg';
 
 const SidebarComponent = ({ children }) => {

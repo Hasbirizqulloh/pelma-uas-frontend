@@ -5,7 +5,6 @@ import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { getMe } from '../features/authSlices';
 import FormUser from '../component/FormUser';
 
 const TambahUser = () => {

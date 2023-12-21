@@ -5,7 +5,6 @@ import ListKomunitas from '../component/ListKomunitas';
 import Riwayat from '../component/Riwayat';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { getMe } from '../features/authSlices';
 
 const Dashboard = () => {
   const dispatch = useDispatch();

@@ -25,7 +25,8 @@ const Login = () => {
       // Assuming the loginUser function returns a token
       const token = response.data.token;
       const role = response.data.role;
-      console.log(role);
+      console.log('role :' + role);
+      console.log('token:' + token);
       // Handle successful login, you can save the token to local storage or context
       localStorage.setItem('Authorization', token);
 

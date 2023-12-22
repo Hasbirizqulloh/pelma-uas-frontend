@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import Table from 'react-bootstrap/Table';
-import { getUsers } from '../features/authSlices.js';
+import { getUsers, deleteUser } from '../features/authSlices.js';
 import { CgMathPlus, CgPen, CgTrash } from 'react-icons/cg';
 import EditUser from './EditUser';
 
@@ -14,6 +14,13 @@ const ListUser = () => {
       setUsers(data);
     }, token);
   }, [token]);
+
+  const handleDeleteUser = (userId) => {
+    deleteUser(userId, token, () => {
+      alert('User berhasil dihapus');
+      window.location.reload(); // Melakukan refresh halaman setelah penghapusan berhasil
+    });
+  };
 
   return (
     <div className="mt-3">
@@ -45,7 +52,7 @@ const ListUser = () => {
                 <td>{user.role}</td>
                 <td>
                   <EditUser userId={user.userId} />
-                  <button className="btn btn-danger btn-sm">
+                  <button className="btn btn-danger btn-sm" onClick={() => handleDeleteUser(user.userId)}>
                     <CgTrash /> Delete
                   </button>
                 </td>

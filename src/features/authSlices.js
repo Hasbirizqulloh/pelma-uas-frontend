@@ -106,6 +106,19 @@ export const getUserById = async (id, token) => {
   }
 };
 
+export const deleteUser = async (id, token) => {
+  try {
+    const response = await axios.delete(`${API_URL}/api/users/${id}`, {
+      headers: {
+        Authorization: `${token}`,
+      },
+    });
+    return response.data;
+  } catch (error) {
+    throw error.response ? error.response.data : error.message;
+  }
+};
+
 export const authSlice = createSlice({
   name: 'auth',
   initialState,

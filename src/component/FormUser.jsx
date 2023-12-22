@@ -32,7 +32,7 @@ const FormUser = () => {
       console.log('Add user successful:', response);
       setFormData({ nama: '', email: '', password: '', role: '' });
       setIsLoading(false);
-      navigate('/');
+      navigate('/laporan');
       alert('User Berhasil ditambahkan');
     } catch (error) {
       setIsLoading(false);

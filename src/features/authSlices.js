@@ -25,7 +25,7 @@ export const loginUser = async (loginData) => {
   }
 };
 
-export const SignUpUser = async (signupData) => {
+export const signUpUser = async (signupData) => {
   try {
     const response = await axios.post(`${API_URL}/api/users`, signupData);
     return response.data;

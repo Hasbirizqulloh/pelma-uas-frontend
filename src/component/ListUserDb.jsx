@@ -8,7 +8,7 @@ const ListUserDb = () => {
   const [users, setUser] = useState();
   const token = localStorage.getItem('Authorization');
 
-  const getUser = async (token) => {
+  const getUser = async () => {
     try {
       const response = await axios.get('https://api-jadi-fix.vercel.app/api/users', {
         headers: {
@@ -23,7 +23,7 @@ const ListUserDb = () => {
   };
 
   useEffect(() => {
-    getUser(token);
+    getUser();
   }, []);
 
   return (

@@ -1,26 +1,19 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import axios from 'axios';
 import Table from 'react-bootstrap/Table';
+import { getUsers } from '../features/authSlices.js';
 import { CgMathPlus, CgPen, CgTrash } from 'react-icons/cg';
 import EditUser from './EditUser';
 
 const ListUser = () => {
-  const [users, setUser] = useState([]);
-
-  const getUser = async () => {
-    const response = await axios.get('http://localhost:5000/users');
-    setUser(response.data);
-  };
-
-  const deleteUser = async (userId) => {
-    await axios.delete(`http://localhost:5000/users/${userId}`);
-    getUser();
-  };
+  const [users, setUsers] = useState([]);
+  const token = localStorage.getItem('Authorization');
 
   useEffect(() => {
-    getUser();
-  }, []);
+    getUsers((data) => {
+      setUsers(data);
+    }, token);
+  }, [token]);
 
   return (
     <div className="mt-3">
@@ -45,21 +38,20 @@ const ListUser = () => {
         <tbody>
           {users.map((user, index) => {
             return (
-              <tr key={user.uuid}>
+              <tr key={user.userId}>
                 <td>{index + 1}</td>
-                <td>{user.name}</td>
+                <td>{user.nama}</td>
                 <td>{user.email}</td>
                 <td>{user.role}</td>
-
-                <td>
+                {/* <td>
                   <EditUser userId={user.uuid} />
-                  {/* <button className="btn btn-primary btn-sm me-2">
+                  <button className="btn btn-primary btn-sm me-2">
                     <CgPen /> Edit
-                  </button> */}
+                  </button>
                   <button className="btn btn-danger btn-sm" onClick={() => deleteUser(user.uuid)}>
                     <CgTrash /> Delete
                   </button>
-                </td>
+                </td> */}
               </tr>
             );
           })}

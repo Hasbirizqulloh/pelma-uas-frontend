@@ -65,7 +65,7 @@ const FormUser = () => {
                 Email
               </Form.Label>
               <Col sm="10">
-                <Form.Control type="text" name="e-mail" className="input" value={formData.email} onChange={handleInputChange} placeholder="Email" />
+                <Form.Control type="text" name="email" className="input" value={formData.email} onChange={handleInputChange} placeholder="Email" />
               </Col>
             </Form.Group>
             <Form.Group as={Row} className="mb-3" controlId="formPlaintextPassword">

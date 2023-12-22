@@ -9,12 +9,17 @@ const ListUserDb = () => {
   const token = localStorage.getItem('Authorization');
 
   const getUser = async (token) => {
-    const response = await axios.get('https://api-jadi-fix.vercel.app/api/users', {
-      headers: {
-        Authorization: `${token}`,
-      },
-    });
-    setUser(response.data);
+    try {
+      const response = await axios.get('https://api-jadi-fix.vercel.app/api/users', {
+        headers: {
+          Authorization: `${token}`,
+        },
+      });
+      setUser(response.data); // Pastikan response.data adalah array
+    } catch (error) {
+      console.error('Error fetching data:', error);
+      // Tangani kesalahan, misalnya, menampilkan pesan kesalahan kepada pengguna
+    }
   };
 
   useEffect(() => {
@@ -35,15 +40,16 @@ const ListUserDb = () => {
           </tr>
         </thead>
         <tbody>
-          {users.map((user, index) => {
-            return (
-              <tr key={user.userId}>
-                <td>{index + 1}</td>
-                <td>{user.nama}</td>
-                <td>{user.role}</td>
-              </tr>
-            );
-          })}
+          {Array.isArray(users) &&
+            users.map((user, index) => {
+              return (
+                <tr key={user.userId}>
+                  <td>{index + 1}</td>
+                  <td>{user.nama}</td>
+                  <td>{user.role}</td>
+                </tr>
+              );
+            })}
         </tbody>
       </Table>
     </div>

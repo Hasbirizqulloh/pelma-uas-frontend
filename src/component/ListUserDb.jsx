@@ -6,6 +6,9 @@ import { getUsers } from '../features/authSlices.js';
 import { CgMathPlus, CgPen, CgTrash } from 'react-icons/cg';
 
 const ListUserDb = () => {
+  const [users, setUser] = useState();
+  const token = localStorage.getItem('Authorization');
+
   useEffect(() => {
     const fetchUsers = async () => {
       try {

@@ -6,16 +6,20 @@ import { getUsers } from '../features/authSlices.js';
 import { CgMathPlus, CgPen, CgTrash } from 'react-icons/cg';
 
 const ListUserDb = () => {
-  const [users, setUser] = useState();
-  const token = localStorage.getItem('Authorization');
-
   useEffect(() => {
-    getUsers(token).then((res) => {
-      setUser(res.data);
-    });
-  }, []);
+    const fetchUsers = async () => {
+      try {
+        const userData = await getUsers(token);
+        setUsers(userData);
+      } catch (error) {
+        console.error('Error fetching users:', error);
+      }
+    };
 
-  console.log(users);
+    fetchUsers();
+  }, [token]);
+
+  console.log(users); // Untuk memeriksa nilai users di console
 
   return (
     <div className="mt-3">

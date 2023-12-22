@@ -13,6 +13,7 @@ const FormUser = () => {
     email: '',
     password: '',
   });
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;

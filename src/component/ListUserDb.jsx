@@ -1,18 +1,19 @@
-import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
-import axios from "axios";
-import Table from "react-bootstrap/Table";
-import { getUsers } from "../features/authSlices.js";
-import { CgMathPlus, CgPen, CgTrash } from "react-icons/cg";
+import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
+import axios from 'axios';
+import Table from 'react-bootstrap/Table';
+import { getUsers } from '../features/authSlices.js';
+import { CgMathPlus, CgPen, CgTrash } from 'react-icons/cg';
 
 const ListUserDb = () => {
   const [users, setUsers] = useState([]);
+  const token = localStorage.getItem('Authorization');
 
   useEffect(() => {
     getUsers((data) => {
       setUsers(data);
     });
-  }, []);
+  }, [token]);
 
   console.log(users); // Untuk memeriksa nilai users di console
 

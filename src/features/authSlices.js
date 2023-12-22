@@ -93,6 +93,19 @@ export const getUsers = async (callback, token) => {
     });
 };
 
+export const getUserById = async (id, token) => {
+  try {
+    const response = await axios.get(`${API_URL}/api/users/${id}`, {
+      headers: {
+        Authorization: `${token}`,
+      },
+    });
+    return response.data;
+  } catch (error) {
+    throw error.response ? error.response.data : error.message;
+  }
+};
+
 export const authSlice = createSlice({
   name: 'auth',
   initialState,

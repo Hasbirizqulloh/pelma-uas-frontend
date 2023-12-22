@@ -43,15 +43,15 @@ const ListUser = () => {
                 <td>{user.nama}</td>
                 <td>{user.email}</td>
                 <td>{user.role}</td>
-                {/* <td>
-                  <EditUser userId={user.uuid} />
+                <td>
+                  <EditUser userId={user.userId} />
                   <button className="btn btn-primary btn-sm me-2">
                     <CgPen /> Edit
                   </button>
-                  <button className="btn btn-danger btn-sm" onClick={() => deleteUser(user.uuid)}>
+                  <button className="btn btn-danger btn-sm">
                     <CgTrash /> Delete
                   </button>
-                </td> */}
+                </td>
               </tr>
             );
           })}

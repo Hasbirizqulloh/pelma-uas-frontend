@@ -6,53 +6,44 @@ import Modal from 'react-bootstrap/Modal';
 import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
-import axios from 'axios';
+import { getUserById } from '../features/authSlices';
 
 function MyVerticallyCenteredModal({ show, onHide, userId }) {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [confPassword, setConfPassword] = useState('');
   const [role, setRole] = useState('');
   const [msg, setMsg] = useState('');
+  const token = localStorage.getItem('Authorization');
 
   useEffect(() => {
-    const getUserById = async () => {
-      try {
-        const response = await axios.get(`http://localhost:5000/users/${userId}`);
-        const userData = response.data;
-
-        setName(userData.name);
-        setEmail(userData.email);
-        setRole(userData.role);
-      } catch (error) {
-        if (error.response) {
-          setMsg(error.response.data.msg);
-        }
-      }
-    };
+    getUserById(userId, token).then((res) => {
+      setName(res.data.nama);
+      setEmail(res.data.email);
+      setRole(res.data.role);
+    });
     if (show) {
       getUserById();
     }
   }, [show, userId]);
 
-  const updateUser = async (e) => {
-    e.preventDefault();
-    try {
-      await axios.patch(`http://localhost:5000/users/${userId}`, {
-        name: name,
-        email: email,
-        password: password,
-        confPassword: confPassword,
-        role: role,
-      });
-      onHide();
-    } catch (error) {
-      if (error.response) {
-        setMsg(error.response.data.msg);
-      }
-    }
-  };
+  // const updateUser = async (e) => {
+  //   e.preventDefault();
+  //   try {
+  //     await axios.patch(`http://localhost:5000/users/${userId}`, {
+  //       name: name,
+  //       email: email,
+  //       password: password,
+  //       confPassword: confPassword,
+  //       role: role,
+  //     });
+  //     onHide();
+  //   } catch (error) {
+  //     if (error.response) {
+  //       setMsg(error.response.data.msg);
+  //     }
+  //   }
+  // };
 
   return (
     <Modal show={show} onHide={onHide} size="lg" aria-labelledby="contained-modal-title-vcenter" centered>
@@ -60,13 +51,13 @@ function MyVerticallyCenteredModal({ show, onHide, userId }) {
         <Modal.Title id="contained-modal-title-vcenter">Edit User</Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        <Form onSubmit={updateUser}>
+        <Form>
           <Form.Group as={Row} className="mb-3" controlId="formPlaintextEmail">
             <Form.Label column sm="2">
               Nama
             </Form.Label>
             <Col sm="10">
-              <Form.Control type="text" value={name} onChange={(e) => setName(e.target.value)} />
+              <Form.Control type="text" value={name} />
             </Col>
           </Form.Group>
           <Form.Group as={Row} className="mb-3" controlId="formPlaintextPassword">
@@ -74,7 +65,7 @@ function MyVerticallyCenteredModal({ show, onHide, userId }) {
               Email
             </Form.Label>
             <Col sm="10">
-              <Form.Control type="text" value={email} onChange={(e) => setEmail(e.target.value)} />
+              <Form.Control type="text" value={email} />
             </Col>
           </Form.Group>
           <Form.Group as={Row} className="mb-3" controlId="formPlaintextPassword">
@@ -82,7 +73,7 @@ function MyVerticallyCenteredModal({ show, onHide, userId }) {
               Role
             </Form.Label>
             <Col sm="10">
-              <Form.Select aria-label="Default select example" value={role} onChange={(e) => setRole(e.target.value)}>
+              <Form.Select aria-label="Default select example" value={role}>
                 <option>{role}</option>
                 <option value="admin">Admin</option>
                 <option value="user">User</option>

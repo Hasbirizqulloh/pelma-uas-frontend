@@ -1,36 +1,46 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { signUpUser } from '../features/authSlices';
 import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
 
 const FormUser = () => {
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [confPassword, setConfPassword] = useState('');
-  const [role, setRole] = useState('');
-  const [msg, setMsg] = useState('');
   const navigate = useNavigate();
+  const [formData, setFormData] = useState({
+    nama: '',
+    email: '',
+    password: '',
+  });
 
-  const saveUser = async (e) => {
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({
+      ...formData,
+      [name]: value,
+    });
+  };
+
+  const handleAddNewUser = async (e) => {
     e.preventDefault();
+    setIsLoading(true);
+
     try {
-      await axios.post('http://localhost:5000/users', {
-        name: name,
-        email: email,
-        password: password,
-        confPassword: confPassword,
-        role: role,
-      });
-      navigate('/useradmin');
+      const response = await signUpUser(formData);
+      console.log('Add user successful:', response);
+      setFormData({ nama: '', email: '', password: '', role: '' });
+      setIsLoading(false);
+      navigate('/');
+      alert('User Berhasil ditambahkan');
     } catch (error) {
-      if (error.response) {
-        setMsg(error.response.data.msg);
-      }
+      setIsLoading(false);
+      setIsError(true);
+      console.error('Add user error:', error);
+      alert('Add user failed. Please try again.');
     }
   };
+
   const goBack = () => {
     navigate('/useradmin'); // Navigasi kembali ke halaman dashboard
   };
@@ -41,13 +51,13 @@ const FormUser = () => {
           <h3>TAMBAH USER</h3>
         </Row>
         <Row>
-          <Form onSubmit={saveUser}>
+          <Form onSubmit={handleAddNewUser}>
             <Form.Group as={Row} className="mb-3" controlId="formPlaintextEmail">
               <Form.Label column sm="2">
                 Nama
               </Form.Label>
               <Col sm="10">
-                <Form.Control type="text" className="input" value={name} onChange={(e) => setName(e.target.value)} placeholder="Name" />
+                <Form.Control type="text" className="input" value={formData.nama} onChange={handleInputChange} placeholder="Name" />
               </Col>
             </Form.Group>
             <Form.Group as={Row} className="mb-3" controlId="formPlaintextPassword">
@@ -55,7 +65,7 @@ const FormUser = () => {
                 Email
               </Form.Label>
               <Col sm="10">
-                <Form.Control type="text" className="input" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="Email" />
+                <Form.Control type="text" className="input" value={formData.email} onChange={handleInputChange} placeholder="Email" />
               </Col>
             </Form.Group>
             <Form.Group as={Row} className="mb-3" controlId="formPlaintextPassword">
@@ -63,15 +73,7 @@ const FormUser = () => {
                 Password
               </Form.Label>
               <Col sm="10">
-                <Form.Control type="password" className="input" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="******" />
-              </Col>
-            </Form.Group>
-            <Form.Group as={Row} className="mb-3" controlId="formPlaintextPassword">
-              <Form.Label column sm="2">
-                Confirm Password
-              </Form.Label>
-              <Col sm="10">
-                <Form.Control type="password" className="input" value={confPassword} onChange={(e) => setConfPassword(e.target.value)} placeholder="******" />
+                <Form.Control type="password" className="input" value={formData.password} onChange={handleInputChange} placeholder="******" />
               </Col>
             </Form.Group>
             <Form.Group as={Row} className="mb-3" controlId="formPlaintextPassword">
@@ -79,7 +81,7 @@ const FormUser = () => {
                 Role
               </Form.Label>
               <Col sm="10">
-                <Form.Select aria-label="Default select example" value={role} onChange={(e) => setRole(e.target.value)}>
+                <Form.Select aria-label="Default select example" value={formData.role} onChange={handleInputChange}>
                   <option value="user">User</option>
                   <option value="admin">Admin</option>
                 </Form.Select>

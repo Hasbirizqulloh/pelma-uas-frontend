@@ -15,7 +15,7 @@ const ListUserDb = () => {
           Authorization: `${token}`,
         },
       });
-      setUser(response.data); // Pastikan response.data adalah array
+      setUser(response.data);
     } catch (error) {
       console.error('Error fetching data:', error);
       // Tangani kesalahan, misalnya, menampilkan pesan kesalahan kepada pengguna
@@ -25,6 +25,8 @@ const ListUserDb = () => {
   useEffect(() => {
     getUser();
   }, []);
+
+  console.log(users);
 
   return (
     <div className="mt-3">

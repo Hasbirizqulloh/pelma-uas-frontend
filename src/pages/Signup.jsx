@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import { signUpUser } from '../features/authSlices';
 import banner from '../assets/undraw_nature_on_screen_xkli.svg';
 

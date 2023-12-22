@@ -86,7 +86,7 @@ export const getUsers = async (callback, token) => {
       },
     })
     .then((res) => {
-      callback(res.data);
+      callback(res.data.data);
     })
     .catch((error) => {
       throw error.response ? error.response.data : error.message;

@@ -6,21 +6,21 @@ import { CgDetailsMore, CgTrash } from 'react-icons/cg';
 import axios from 'axios';
 
 const ListLaporanDb = () => {
-  const [reports, setReport] = useState([]);
+  // const [reports, setReport] = useState([]);
 
-  const getReports = async () => {
-    const response = await axios.get('http://localhost:5000/reports');
-    setReport(response.data);
-  };
+  // const getReports = async () => {
+  //   const response = await axios.get('http://localhost:5000/reports');
+  //   setReport(response.data);
+  // };
 
-  const deleteReports = async (reportId) => {
-    await axios.delete(`http://localhost:5000/reports/${reportId}`);
-    getReports();
-  };
+  // const deleteReports = async (reportId) => {
+  //   await axios.delete(`http://localhost:5000/reports/${reportId}`);
+  //   getReports();
+  // };
 
-  useEffect(() => {
-    getReports();
-  }, []);
+  // useEffect(() => {
+  //   getReports();
+  // }, []);
 
   return (
     <div className="mt-3">

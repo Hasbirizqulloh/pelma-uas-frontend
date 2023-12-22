@@ -4,6 +4,7 @@ import { signUpUser } from '../features/authSlices';
 import banner from '../assets/undraw_nature_on_screen_xkli.svg';
 
 const Signup = () => {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     nama: '',
     email: '',
@@ -25,17 +26,17 @@ const Signup = () => {
     setIsLoading(true);
 
     try {
-      // Panggil fungsi signUpUser yang mengirim data ke server
       const response = await signUpUser(formData);
       console.log('Signup successful:', response);
-      // Reset form setelah pendaftaran berhasil
       setFormData({ nama: '', email: '', password: '' });
       setIsLoading(false);
+      navigate('/');
+      alert('Signup successful! You can now login.');
     } catch (error) {
       setIsLoading(false);
       setIsError(true);
       console.error('Signup error:', error);
-      // Handle error: tampilkan pesan kesalahan atau lakukan sesuatu
+      alert('Signup failed. Please try again.');
     }
   };
 

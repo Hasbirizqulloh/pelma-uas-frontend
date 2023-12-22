@@ -1,12 +1,25 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { FaTh, FaBars, FaUserAlt, FaRegChartBar } from 'react-icons/fa';
 import { CgLogOut } from 'react-icons/cg';
 import { AiOutlineUser } from 'react-icons/ai';
 import { NavLink, useNavigate } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
+import { logoutUser, getMe } from '../features/authSlices';
 import aset from '../assets/react.svg';
 
 const SidebarComponentAdmin = ({ children }) => {
+  const [userData, setUserData] = useState([]);
+  const token = localStorage.getItem('Authorization');
+  const handleLogout = async (e) => {
+    e.preventDefault();
+    try {
+      await logoutUser(token);
+      alert('Logout success');
+      window.location.href = '/';
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   const SidebarMenu = [
     {
       path: '/dashboardAdmin',
@@ -25,15 +38,12 @@ const SidebarComponentAdmin = ({ children }) => {
     },
   ];
 
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
-  const { user } = useSelector((state) => state.auth);
+  useEffect(() => {
+    getMe(token).then((res) => {
+      setUserData(res.data);
+    });
+  });
 
-  const logout = () => {
-    dispatch(LogOut());
-    dispatch(reset());
-    navigate('/');
-  };
   return (
     <div className="containers">
       <div className="sidebar">
@@ -56,13 +66,13 @@ const SidebarComponentAdmin = ({ children }) => {
               <div className="profile-details">
                 <img src={aset} alt="" />
                 <div className="name_job">
-                  <div className="name">{user && user.name}</div>
-                  <div className="job">{user && user.role}</div>
+                  <div className="name">{userData && userData.name}</div>
+                  <div className="job">{userData && userData.role}</div>
                 </div>
               </div>
             </NavLink>
             <i className="logout">
-              <a onClick={logout}>
+              <a onClick={handleLogout}>
                 <CgLogOut />
               </a>
             </i>

@@ -79,18 +79,30 @@ export const getMe = async (token) => {
 };
 
 export const getUsers = async (callback, token) => {
-  await axios
-    .get(`${API_URL}/api/users`, {
+  try {
+    const response = await axios.get('${API_URL}/api/users', {
       headers: {
-        Authorization: `${token}`,
+        Authorization: token,
       },
-    })
-    .then((res) => {
-      callback(res.data);
-    })
-    .catch((error) => {
-      throw error.response ? error.response.data : error.message;
     });
+    callback(response.data); // Assuming response.data is an array of users
+  } catch (error) {
+    console.error('Error fetching users:', error);
+    // Handle error or set users to a default value to prevent 'users.map is not a function'
+  }
+
+  // await axios
+  //   .get(`${API_URL}/api/users`, {
+  //     headers: {
+  //       Authorization: `${token}`,
+  //     },
+  //   })
+  //   .then((res) => {
+  //     callback(res.data);
+  //   })
+  //   .catch((error) => {
+  //     throw error.response ? error.response.data : error.message;
+  //   });
 };
 
 export const authSlice = createSlice({

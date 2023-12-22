@@ -6,12 +6,12 @@ import banner from '../assets/undraw_nature_on_screen_xkli.svg';
 
 const Signup = () => {
   const [formData, setFormData] = useState({
-    name: '',
+    nama: '',
     email: '',
     password: '',
   });
 
-  const { name, email, password, confPassword } = formData;
+  const { nama, email, password, confPassword } = formData;
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -41,7 +41,7 @@ const Signup = () => {
             {isError && <p className="has-text-centered">{message}</p>}
             <h2>Signup</h2>
             <div className="input-box">
-              <input type="text" name="name" value={name} onChange={handleInputChange} required />
+              <input type="text" name="nama" value={nama} onChange={handleInputChange} required />
               <label htmlFor="name">Name</label>
             </div>
             <div className="input-box">

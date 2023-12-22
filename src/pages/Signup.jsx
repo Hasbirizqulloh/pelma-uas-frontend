@@ -6,54 +6,51 @@ import banner from '../assets/undraw_nature_on_screen_xkli.svg';
 
 const Signup = () => {
   const dispatch = useDispatch();
-  const { isLoading, isError, message } = useSelector((state) => state.auth); // Assuming your auth state is structured this way
+  const isLoading = useSelector((state) => state.auth.isLoading);
+  const isError = useSelector((state) => state.auth.isError);
 
+  // State untuk menyimpan nilai input
   const [formData, setFormData] = useState({
     name: '',
     email: '',
     password: '',
-    confPassword: '',
   });
 
+  // Penanganan perubahan pada input
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setFormData((prevData) => ({ ...prevData, [name]: value }));
+    setFormData({
+      ...formData,
+      [name]: value,
+    });
   };
 
+  // Penanganan saat form signup disubmit
   const handleSignup = (e) => {
     e.preventDefault();
-    // Basic client-side validation
-    if (formData.password !== formData.confPassword) {
-      // Passwords do not match
-      // You can dispatch an action to update the state with an error message
-      return;
-    }
+    const { name, email, password } = formData;
 
-    // Dispatch the signup action
-    dispatch(signUpUser(formData));
+    // Memanggil aksi Redux untuk pendaftaran pengguna
+    dispatch(signUpUser({ name, email, password }));
   };
   return (
     <div className="login-page">
       <div className="login-container">
         <div className="login-section">
           <form onSubmit={handleSignup} className="form">
-            {isError && <p className="has-text-centered">{message}</p>}
+            {isError && <p className="has-text-centered">{isError}</p>}
             <h2>Signup</h2>
             <div className="input-box">
-              <input type="text" name="nama" value={nama} onChange={handleInputChange} required />
+              <input type="text" name="name" value={formData.name} onChange={handleInputChange} required />
               <label htmlFor="name">Name</label>
             </div>
             <div className="input-box">
-              <input type="e-mail" name="email" value={email} onChange={handleInputChange} required />
+              <input type="email" name="email" value={formData.email} onChange={handleInputChange} required />
               <label htmlFor="email">Email</label>
             </div>
             <div className="input-box">
-              <input type="password" name="password" value={password} onChange={handleInputChange} required />
+              <input type="password" name="password" value={formData.password} onChange={handleInputChange} required />
               <label htmlFor="password">Password</label>
-            </div>
-            <div className="input-box">
-              <input type="password" name="confPassword" value={confPassword} onChange={handleInputChange} required />
-              <label htmlFor="confPassword">Confirm Password</label>
             </div>
             <div className="input-box">
               <button type="submit" className="button">

@@ -6,19 +6,19 @@ import { CgMathPlus, CgPen, CgTrash } from 'react-icons/cg';
 
 const ListUserDb = () => {
   const [users, setUser] = useState([]);
+  const token = localStorage.getItem('Authorization');
 
-  const getUser = async () => {
-    const response = await axios.get('http://localhost:5000/users');
+  const getUser = async (token) => {
+    const response = await axios.get('https://api-jadi-fix.vercel.app/api/users', {
+      headers: {
+        Authorization: `${token}`,
+      },
+    });
     setUser(response.data);
   };
 
-  const deleteUser = async (userId) => {
-    await axios.delete(`http://localhost:5000/reports/${userId}`);
-    getUser();
-  };
-
   useEffect(() => {
-    getUser();
+    getUser(token);
   }, []);
 
   return (
@@ -37,9 +37,9 @@ const ListUserDb = () => {
         <tbody>
           {users.map((user, index) => {
             return (
-              <tr key={user.uuid}>
+              <tr key={user.userId}>
                 <td>{index + 1}</td>
-                <td>{user.name}</td>
+                <td>{user.nama}</td>
 
                 <td>{user.role}</td>
               </tr>

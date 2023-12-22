@@ -66,7 +66,7 @@ const SidebarComponentAdmin = ({ children }) => {
               <div className="profile-details">
                 <img src={aset} alt="" />
                 <div className="name_job">
-                  <div className="name">{userData && userData.name}</div>
+                  <div className="name">{userData && userData.nama}</div>
                   <div className="job">{userData && userData.role}</div>
                 </div>
               </div>

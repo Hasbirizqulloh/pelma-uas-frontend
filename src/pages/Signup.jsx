@@ -46,11 +46,11 @@ const Signup = () => {
           <form onSubmit={handleSignup} className="form">
             <h2>Signup</h2>
             <div className="input-box">
-              <input type="text" name="name" value={formData.nama} onChange={handleInputChange} required />
+              <input type="text" name="nama" value={formData.nama} onChange={handleInputChange} required />
               <label htmlFor="name">Name</label>
             </div>
             <div className="input-box">
-              <input type="email" name="email" value={formData.email} onChange={handleInputChange} required />
+              <input type="e-mail" name="email" value={formData.email} onChange={handleInputChange} required />
               <label htmlFor="email">Email</label>
             </div>
             <div className="input-box">

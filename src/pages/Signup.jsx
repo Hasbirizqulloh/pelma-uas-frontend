@@ -9,7 +9,6 @@ const Signup = () => {
     name: '',
     email: '',
     password: '',
-    confPassword: '',
   });
 
   const { name, email, password, confPassword } = formData;

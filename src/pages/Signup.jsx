@@ -1,22 +1,17 @@
-import React, { useState, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { NavLink, useNavigate } from 'react-router-dom';
+import React, { useState } from 'react';
+import { NavLink } from 'react-router-dom';
 import { signUpUser } from '../features/authSlices';
 import banner from '../assets/undraw_nature_on_screen_xkli.svg';
 
 const Signup = () => {
-  const dispatch = useDispatch();
-  const isLoading = useSelector((state) => state.auth.isLoading);
-  const isError = useSelector((state) => state.auth.isError);
-
-  // State untuk menyimpan nilai input
   const [formData, setFormData] = useState({
     name: '',
     email: '',
     password: '',
   });
+  const [isLoading, setIsLoading] = useState(false);
+  const [isError, setIsError] = useState(false);
 
-  // Penanganan perubahan pada input
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData({
@@ -25,21 +20,30 @@ const Signup = () => {
     });
   };
 
-  // Penanganan saat form signup disubmit
-  const handleSignup = (e) => {
+  const handleSignup = async (e) => {
     e.preventDefault();
-    const { name, email, password } = formData;
+    setIsLoading(true);
 
-    // Memanggil aksi Redux untuk pendaftaran pengguna
-    dispatch(signUpUser({ name, email, password }));
+    try {
+      // Panggil fungsi signUpUser yang mengirim data ke server
+      const response = await signUpUser(formData);
+      console.log('Signup successful:', response);
+      // Reset form setelah pendaftaran berhasil
+      setFormData({ name: '', email: '', password: '' });
+      setIsLoading(false);
+    } catch (error) {
+      setIsLoading(false);
+      setIsError(true);
+      console.error('Signup error:', error);
+      // Handle error: tampilkan pesan kesalahan atau lakukan sesuatu
+    }
   };
+
   return (
     <div className="login-page">
       <div className="login-container">
         <div className="login-section">
           <form onSubmit={handleSignup} className="form">
-            {isError && <p className="has-text-centered">{isError}</p>}
-            <h2>Signup</h2>
             <div className="input-box">
               <input type="text" name="name" value={formData.name} onChange={handleInputChange} required />
               <label htmlFor="name">Name</label>

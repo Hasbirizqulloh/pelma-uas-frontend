@@ -5,7 +5,7 @@ import Table from 'react-bootstrap/Table';
 import { CgMathPlus, CgPen, CgTrash } from 'react-icons/cg';
 
 const ListUserDb = () => {
-  const [users, setUser] = useState([]);
+  const [users, setUser] = useState();
   const token = localStorage.getItem('Authorization');
 
   const getUser = async (token) => {

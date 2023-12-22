@@ -40,7 +40,7 @@ const HomeAdmin = () => {
           <h1>42</h1>
         </div>
       </div>
-      <ListLaporanDb />
+      {/* <ListLaporanDb /> */}
       <ListUserDb />
     </main>
   );

@@ -40,19 +40,15 @@ const ListUserDb = () => {
           </tr>
         </thead>
         <tbody>
-          {Array.isArray(users) && users.length > 0 ? (
-            users.map((user, index) => (
+          {users.map((user, index) => {
+            return (
               <tr key={user.userId}>
                 <td>{index + 1}</td>
                 <td>{user.nama}</td>
                 <td>{user.role}</td>
               </tr>
-            ))
-          ) : (
-            <tr>
-              <td colSpan="3">Tidak ada data pengguna.</td>
-            </tr>
-          )}
+            );
+          })}
         </tbody>
       </Table>
     </div>

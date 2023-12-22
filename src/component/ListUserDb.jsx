@@ -31,7 +31,7 @@ const ListUserDb = () => {
           </tr>
         </thead>
         <tbody>
-          {users.map((user, index) => {
+          {users.data.map((user, index) => {
             return (
               <tr key={user.userId}>
                 <td>{index + 1}</td>

@@ -5,34 +5,33 @@ import { SignUpUser } from '../features/authSlices';
 import banner from '../assets/undraw_nature_on_screen_xkli.svg';
 
 const Signup = () => {
+  const dispatch = useDispatch();
+  const { isLoading, isError, message } = useSelector((state) => state.auth); // Assuming your auth state is structured this way
+
   const [formData, setFormData] = useState({
-    nama: '',
+    name: '',
     email: '',
     password: '',
+    confPassword: '',
   });
 
-  const { nama, email, password, confPassword } = formData;
-
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
-  const { user, isError, isSuccess, isLoading, message } = useSelector((state) => state.auth);
-
-  useEffect(() => {
-    if (user || isSuccess) {
-      alert('Signup success');
-      navigate('/');
-    }
-  }, [user, isSuccess, dispatch, navigate]);
-
   const handleInputChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    const { name, value } = e.target;
+    setFormData((prevData) => ({ ...prevData, [name]: value }));
   };
 
   const handleSignup = (e) => {
     e.preventDefault();
-    dispatch(SignUpUser(formData));
-  };
+    // Basic client-side validation
+    if (formData.password !== formData.confPassword) {
+      // Passwords do not match
+      // You can dispatch an action to update the state with an error message
+      return;
+    }
 
+    // Dispatch the signup action
+    dispatch(signUpUser(formData));
+  };
   return (
     <div className="login-page">
       <div className="login-container">

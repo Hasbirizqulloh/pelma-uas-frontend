@@ -77,6 +77,24 @@ export const getMe = async (token) => {
   }
 };
 
+export const getUsers = async (token) => {
+  try {
+    // Panggil API untuk mendapatkan data user menggunakan Axios
+    const response = await axios.get(`${API_URL}/api/users`, {
+      headers: {
+        Authorization: `${token}`,
+      },
+    });
+    if (!token) {
+      throw new Error('Token not found');
+    }
+    return response.data;
+  } catch (error) {
+    // Menghandle kesalahan selama proses mendapatkan data user
+    throw error.response ? error.response.data : error.message;
+  }
+};
+
 export const authSlice = createSlice({
   name: 'auth',
   initialState,

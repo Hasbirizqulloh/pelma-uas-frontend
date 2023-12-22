@@ -2,28 +2,17 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import Table from 'react-bootstrap/Table';
+import { getUsers } from '../features/authSlices.js';
 import { CgMathPlus, CgPen, CgTrash } from 'react-icons/cg';
 
 const ListUserDb = () => {
   const [users, setUser] = useState();
   const token = localStorage.getItem('Authorization');
 
-  const getUser = async () => {
-    try {
-      const response = await axios.get('https://api-jadi-fix.vercel.app/api/users', {
-        headers: {
-          Authorization: `${token}`,
-        },
-      });
-      setUser(response.data);
-    } catch (error) {
-      console.error('Error fetching data:', error);
-      // Tangani kesalahan, misalnya, menampilkan pesan kesalahan kepada pengguna
-    }
-  };
-
   useEffect(() => {
-    getUser();
+    getUsers(token).then((res) => {
+      setUser(res.data);
+    });
   }, []);
 
   console.log(users);

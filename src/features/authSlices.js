@@ -1,14 +1,15 @@
-import axios from 'axios';
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import axios from "axios";
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
-const API_URL = 'https://api-jadi-fix.vercel.app'; // Gantilah dengan URL API sesuai kebutuhan
+const API_URL = "https://api-jadi-fix.vercel.app"; // Gantilah dengan URL API sesuai kebutuhan
+const token = localStorage.getItem("Authorization");
 
 const initialState = {
   user: null,
   isError: false,
   isSuccess: false,
   isLoading: false,
-  message: '',
+  message: "",
 };
 
 export const loginUser = async (loginData) => {
@@ -38,7 +39,7 @@ export const logoutUser = async (token) => {
     // Panggil API untuk logout menggunakan Axios
 
     if (!token) {
-      throw new Error('Token not found');
+      throw new Error("Token not found");
     }
 
     // Panggil API untuk logout dengan menyertakan token dalam header Authorization
@@ -49,10 +50,10 @@ export const logoutUser = async (token) => {
     });
 
     // Hapus token dari localStorage
-    localStorage.removeItem('Authorization');
-    localStorage.removeItem('Roles');
+    localStorage.removeItem("Authorization");
+    localStorage.removeItem("Roles");
 
-    console.log('Logout berhasil');
+    console.log("Logout berhasil");
   } catch (error) {
     // Menghandle kesalahan selama proses logout
     throw error.response ? error.response.data : error.message;
@@ -68,7 +69,7 @@ export const getMe = async (token) => {
       },
     });
     if (!token) {
-      throw new Error('Token not found');
+      throw new Error("Token not found");
     }
     return response.data;
   } catch (error) {
@@ -77,26 +78,34 @@ export const getMe = async (token) => {
   }
 };
 
-export const getUsers = async (token) => {
-  try {
-    // Panggil API untuk mendapatkan data user menggunakan Axios
-    const response = await axios.get(`${API_URL}/api/users`, {
+export const getUsers = async (callback) => {
+  // Panggil API untuk mendapatkan data user menggunakan Axios
+  // const response = await axios.get(`${API_URL}/api/users`, {
+  //   headers: {
+  //     Authorization: `${token}`,
+  //   },
+  // });
+  // if (!token) {
+  //   throw new Error("Token not found");
+  // }
+  // return response.data;
+
+  await axios
+    .get(`${API_URL}/api/users`, {
       headers: {
         Authorization: `${token}`,
       },
+    })
+    .then((res) => {
+      callback(res.data);
+    })
+    .catch((error) => {
+      throw error.response ? error.response.data : error.message;
     });
-    if (!token) {
-      throw new Error('Token not found');
-    }
-    return response.data;
-  } catch (error) {
-    // Menghandle kesalahan selama proses mendapatkan data user
-    throw error.response ? error.response.data : error.message;
-  }
 };
 
 export const authSlice = createSlice({
-  name: 'auth',
+  name: "auth",
   initialState,
   reducers: {
     reset: (state) => initialState,

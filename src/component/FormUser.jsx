@@ -57,7 +57,7 @@ const FormUser = () => {
                 Nama
               </Form.Label>
               <Col sm="10">
-                <Form.Control type="text" className="input" value={formData.nama} onChange={handleInputChange} placeholder="Name" />
+                <Form.Control type="text" name="nama" className="input" value={formData.nama} onChange={handleInputChange} placeholder="Name" />
               </Col>
             </Form.Group>
             <Form.Group as={Row} className="mb-3" controlId="formPlaintextPassword">
@@ -65,7 +65,7 @@ const FormUser = () => {
                 Email
               </Form.Label>
               <Col sm="10">
-                <Form.Control type="text" className="input" value={formData.email} onChange={handleInputChange} placeholder="Email" />
+                <Form.Control type="text" name="e-mail" className="input" value={formData.email} onChange={handleInputChange} placeholder="Email" />
               </Col>
             </Form.Group>
             <Form.Group as={Row} className="mb-3" controlId="formPlaintextPassword">
@@ -73,7 +73,7 @@ const FormUser = () => {
                 Password
               </Form.Label>
               <Col sm="10">
-                <Form.Control type="password" className="input" value={formData.password} onChange={handleInputChange} placeholder="******" />
+                <Form.Control type="password" name="password" className="input" value={formData.password} onChange={handleInputChange} placeholder="******" />
               </Col>
             </Form.Group>
             <Form.Group as={Row} className="mb-3" controlId="formPlaintextPassword">
@@ -81,7 +81,7 @@ const FormUser = () => {
                 Role
               </Form.Label>
               <Col sm="10">
-                <Form.Select aria-label="Default select example" value={formData.role} onChange={handleInputChange}>
+                <Form.Select aria-label="Default select example" name="role" value={formData.role} onChange={handleInputChange}>
                   <option value="user">User</option>
                   <option value="admin">Admin</option>
                 </Form.Select>

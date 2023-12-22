@@ -1,15 +1,15 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { FaTh, FaBars, FaUserAlt, FaRegChartBar, FaCommentAlt } from 'react-icons/fa';
 import { CgLogOut } from 'react-icons/cg';
 import { NavLink, useNavigate } from 'react-router-dom';
-import { logoutUser } from '../features/authSlices';
+import { logoutUser, getMe } from '../features/authSlices';
 import aset from '../assets/react.svg';
 
 const SidebarComponent = ({ children }) => {
+  const [userData, setUserData] = useState([]);
+  const token = localStorage.getItem('Authorization');
   const handleLogout = async (e) => {
     e.preventDefault();
-    const token = localStorage.getItem('Authorization');
-    console.log('ini token ' + token);
     try {
       await logoutUser(token);
       alert('Logout success');
@@ -42,6 +42,12 @@ const SidebarComponent = ({ children }) => {
     },
   ];
 
+  useEffect(() => {
+    getMe(token).then((res) => {
+      setUserData(res.data);
+    });
+  });
+
   return (
     <div className="containers">
       <div className="sidebar">
@@ -64,7 +70,7 @@ const SidebarComponent = ({ children }) => {
               <div className="profile-details">
                 {/* <img src={aset} alt="" /> */}
                 <div className="name_job">
-                  <div className="name">udin</div>
+                  <div className="name">{userData.nama}</div>
                   <div className="job">Poin: 0</div>
                 </div>
               </div>

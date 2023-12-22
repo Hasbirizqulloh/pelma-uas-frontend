@@ -34,6 +34,32 @@ export const signUpUser = async (signupData) => {
   }
 };
 
+export const logoutUser = async () => {
+  try {
+    // Panggil API untuk logout menggunakan Axios
+
+    if (!token) {
+      throw new Error('Token not found');
+    }
+
+    // Panggil API untuk logout dengan menyertakan token dalam header Authorization
+    await axios.delete(`${API_URL}/api/users/logout`, {
+      headers: {
+        Authorization: `${token}`,
+      },
+    });
+
+    // Hapus token dari localStorage
+    localStorage.removeItem('Authorization');
+    localStorage.removeItem('Roles');
+
+    console.log('Logout berhasil');
+  } catch (error) {
+    // Menghandle kesalahan selama proses logout
+    throw error.response ? error.response.data : error.message;
+  }
+};
+
 export const authSlice = createSlice({
   name: 'auth',
   initialState,

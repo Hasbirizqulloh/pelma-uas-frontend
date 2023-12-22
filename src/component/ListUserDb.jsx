@@ -40,7 +40,6 @@ const ListUserDb = () => {
               <tr key={user.userId}>
                 <td>{index + 1}</td>
                 <td>{user.nama}</td>
-
                 <td>{user.role}</td>
               </tr>
             );

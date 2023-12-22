@@ -5,7 +5,7 @@ import banner from '../assets/undraw_nature_on_screen_xkli.svg';
 
 const Signup = () => {
   const [formData, setFormData] = useState({
-    name: '',
+    nama: '',
     email: '',
     password: '',
   });
@@ -29,7 +29,7 @@ const Signup = () => {
       const response = await signUpUser(formData);
       console.log('Signup successful:', response);
       // Reset form setelah pendaftaran berhasil
-      setFormData({ name: '', email: '', password: '' });
+      setFormData({ nama: '', email: '', password: '' });
       setIsLoading(false);
     } catch (error) {
       setIsLoading(false);
@@ -44,8 +44,9 @@ const Signup = () => {
       <div className="login-container">
         <div className="login-section">
           <form onSubmit={handleSignup} className="form">
+            <h2>Signup</h2>
             <div className="input-box">
-              <input type="text" name="name" value={formData.name} onChange={handleInputChange} required />
+              <input type="text" name="name" value={formData.nama} onChange={handleInputChange} required />
               <label htmlFor="name">Name</label>
             </div>
             <div className="input-box">

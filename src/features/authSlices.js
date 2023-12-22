@@ -2,7 +2,6 @@ import axios from 'axios';
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 
 const API_URL = 'https://api-jadi-fix.vercel.app'; // Gantilah dengan URL API sesuai kebutuhan
-const token = localStorage.getItem('Authorization');
 
 const initialState = {
   user: null,
@@ -34,7 +33,7 @@ export const signUpUser = async (signupData) => {
   }
 };
 
-export const logoutUser = async () => {
+export const logoutUser = async (token) => {
   try {
     // Panggil API untuk logout menggunakan Axios
 

@@ -8,8 +8,10 @@ import aset from '../assets/react.svg';
 const SidebarComponent = ({ children }) => {
   const handleLogout = async (e) => {
     e.preventDefault();
+    const token = localStorage.getItem('Authorization');
+    console.log('ini token ' + token);
     try {
-      await logoutUser();
+      await logoutUser(token);
       alert('Logout success');
       window.location.href = '/';
     } catch (error) {

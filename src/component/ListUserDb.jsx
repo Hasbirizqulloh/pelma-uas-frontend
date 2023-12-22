@@ -12,8 +12,8 @@ const ListUserDb = () => {
   useEffect(() => {
     getUsers((data) => {
       setUsers(data);
-    });
-  }, [token]);
+    }, token);
+  });
 
   console.log(users); // Untuk memeriksa nilai users di console
 

@@ -60,7 +60,7 @@ const FormUser = () => {
                 <Form.Control type="text" name="nama" className="input" value={formData.nama} onChange={handleInputChange} placeholder="Name" />
               </Col>
             </Form.Group>
-            <Form.Group as={Row} className="mb-3" controlId="formPlaintextPassword">
+            <Form.Group as={Row} className="mb-3" controlId="adasd">
               <Form.Label column sm="2">
                 Email
               </Form.Label>
@@ -68,7 +68,7 @@ const FormUser = () => {
                 <Form.Control type="text" name="email" className="input" value={formData.email} onChange={handleInputChange} placeholder="Email" />
               </Col>
             </Form.Group>
-            <Form.Group as={Row} className="mb-3" controlId="formPlaintextPassword">
+            <Form.Group as={Row} className="mb-3" controlId="sada">
               <Form.Label column sm="2">
                 Password
               </Form.Label>
@@ -76,7 +76,7 @@ const FormUser = () => {
                 <Form.Control type="password" name="password" className="input" value={formData.password} onChange={handleInputChange} placeholder="******" />
               </Col>
             </Form.Group>
-            <Form.Group as={Row} className="mb-3" controlId="formPlaintextPassword">
+            <Form.Group as={Row} className="mb-3" controlId="fadad">
               <Form.Label column sm="2">
                 Role
               </Form.Label>

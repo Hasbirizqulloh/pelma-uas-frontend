@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Link, useHistory } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Table from 'react-bootstrap/Table';
 import { getUsers, deleteUser } from '../features/authSlices.js';
 import { CgMathPlus, CgPen, CgTrash } from 'react-icons/cg';
@@ -8,7 +8,14 @@ import EditUser from './EditUser';
 const ListUser = () => {
   const [users, setUsers] = useState([]);
   const token = localStorage.getItem('Authorization');
-  const history = useHistory();
+  const [navigateTo, setNavigate] = useState(false);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (navigateTo) {
+      navigate('/dashboardadmin');
+    }
+  }, [navigateTo, navigate]);
 
   useEffect(() => {
     getUsers((data) => {
@@ -21,7 +28,7 @@ const ListUser = () => {
     if (confirmation) {
       deleteUser(userId, token, () => {
         alert('User berhasil dihapus');
-        history.push('/useradmin');
+        setNavigate(true);
       });
     }
   };

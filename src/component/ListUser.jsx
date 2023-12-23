@@ -16,10 +16,13 @@ const ListUser = () => {
   }, [token]);
 
   const handleDeleteUser = (userId) => {
-    deleteUser(userId, token, () => {
-      alert('User berhasil dihapus');
-      window.location.reload(); // Melakukan refresh halaman setelah penghapusan berhasil
-    });
+    const confirmation = window.confirm('Apakah Anda yakin ingin menghapus data ini?');
+    if (confirmation) {
+      deleteUser(userId, token, () => {
+        alert('User berhasil dihapus');
+        window.location.reload(); // Melakukan refresh halaman setelah penghapusan berhasil
+      });
+    }
   };
 
   return (

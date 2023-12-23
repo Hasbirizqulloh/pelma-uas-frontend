@@ -106,13 +106,18 @@ export const getUserById = async (id, token) => {
   }
 };
 
-export const deleteUser = async (id, token) => {
+export const deleteUser = async (id, token, callback) => {
   try {
     const response = await axios.delete(`${API_URL}/api/users/${id}`, {
       headers: {
         Authorization: `${token}`,
       },
     });
+
+    if (callback) {
+      callback(); // Panggil callback jika penghapusan berhasil
+    }
+
     return response.data;
   } catch (error) {
     throw error.response ? error.response.data : error.message;

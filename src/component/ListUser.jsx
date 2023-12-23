@@ -28,7 +28,8 @@ const ListUser = () => {
     if (confirmation) {
       deleteUser(userId, token, () => {
         alert('User berhasil dihapus');
-        setNavigate(true);
+        window.location.reload();
+        // setNavigate(true);
       });
     }
   };

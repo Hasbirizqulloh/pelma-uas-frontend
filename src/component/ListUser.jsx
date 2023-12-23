@@ -21,7 +21,6 @@ const ListUser = () => {
     if (confirmation) {
       deleteUser(userId, token, () => {
         alert('User berhasil dihapus');
-        window.location.reload(); // Melakukan refresh halaman setelah penghapusan berhasil
         history.push('/useradmin');
       });
     }

@@ -13,7 +13,7 @@ const ListUser = () => {
 
   useEffect(() => {
     if (navigateTo) {
-      navigate('/dashboardadmin');
+      navigate('/useradmin');
     }
   }, [navigateTo, navigate]);
 

@@ -13,7 +13,7 @@ const FormLaporan = () => {
   const saveReport = async (e) => {
     e.preventDefault();
     try {
-      await axios.post('http://hasbi-api.faikarmocht.my.id/reports', {
+      await axios.post('https://api-jadi-fix.vercel.app/api/reports', {
         report_content: report,
         headers: {
           'content-type': 'application/json',
@@ -21,6 +21,8 @@ const FormLaporan = () => {
       });
       setMsg('Berhasil');
       console.log(msg);
+      alert('Berhasil');
+      window.location.reload();
     } catch (error) {
       if (error.response) {
         setMsg(error.response.data.msg);

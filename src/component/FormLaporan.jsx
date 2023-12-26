@@ -9,14 +9,16 @@ const FormLaporan = () => {
   const [report, setLaporan] = useState('');
   const [msg, setMsg] = useState('');
   const navigate = useNavigate();
+  const token = localStorage.getItem('Authorization');
 
   const saveReport = async (e) => {
     e.preventDefault();
     try {
       await axios.post('https://api-jadi-fix.vercel.app/api/reports', {
-        report_content: report,
+        report: report,
         headers: {
           'content-type': 'application/json',
+          Authorization: `${token}`,
         },
       });
       setMsg('Berhasil');

@@ -12,6 +12,7 @@ const FormLaporan = () => {
   const token = localStorage.getItem('Authorization');
 
   const saveReport = async (e) => {
+    console.log(token);
     e.preventDefault();
     try {
       await axios.post('https://api-jadi-fix.vercel.app/api/reports', {

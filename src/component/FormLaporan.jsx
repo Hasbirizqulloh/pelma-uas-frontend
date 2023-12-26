@@ -16,10 +16,9 @@ const FormLaporan = () => {
     e.preventDefault();
     try {
       await axios.post('https://api-jadi-fix.vercel.app/api/reports', {
-        report: report,
         headers: {
-          'content-type': 'application/json',
           Authorization: `${token}`,
+          'content-type': 'application/json',
         },
       });
       setMsg('Berhasil');

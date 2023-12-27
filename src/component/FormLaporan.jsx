@@ -17,7 +17,7 @@ const FormLaporan = () => {
     try {
       await axios.post('https://api-jadi-fix.vercel.app/api/reports', {
         headers: {
-          Authorization: `${token}`,
+          Authorization: token,
           'content-type': 'application/json',
         },
       });

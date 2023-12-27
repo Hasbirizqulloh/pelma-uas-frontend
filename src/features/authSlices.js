@@ -124,6 +124,19 @@ export const deleteUser = async (id, token, callback) => {
   }
 };
 
+export const createReport = async (reportData, token) => {
+  try {
+    const response = await axios.post(`${API_URL}/api/reports`, reportData, {
+      headers: {
+        Authorization: `${token}`,
+      },
+    });
+    return response.data;
+  } catch (error) {
+    throw error.response ? error.response.data : error.message;
+  }
+};
+
 export const authSlice = createSlice({
   name: 'auth',
   initialState,

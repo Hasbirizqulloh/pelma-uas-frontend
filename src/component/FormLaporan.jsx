@@ -1,34 +1,23 @@
 import React, { useState } from 'react';
-import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Card from 'react-bootstrap/Card';
+import { createReport } from '../features/authSlices.js';
 
 const FormLaporan = () => {
-  const [report, setLaporan] = useState('');
+  const [laporan, setLaporan] = useState('');
   const [msg, setMsg] = useState('');
   const navigate = useNavigate();
   const token = localStorage.getItem('Authorization');
 
-  const saveReport = async (e) => {
-    console.log(token);
+  const handleCreateReport = async (e) => {
     e.preventDefault();
     try {
-      await axios.post('https://api-jadi-fix.vercel.app/api/reports', {
-        headers: {
-          Authorization: token,
-          'content-type': 'application/json',
-        },
-      });
-      setMsg('Berhasil');
-      console.log(msg);
-      alert('Berhasil');
-      window.location.reload();
+      const response = await createReport(laporan, token);
+      console.log(response);
     } catch (error) {
-      if (error.response) {
-        setMsg(error.response.data.msg);
-      }
+      console.log(error);
     }
   };
 

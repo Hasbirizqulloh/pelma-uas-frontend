@@ -6,16 +6,26 @@ import Card from 'react-bootstrap/Card';
 import { createReport } from '../features/authSlices.js';
 
 const FormLaporan = () => {
-  const [laporan, setLaporan] = useState('');
+  const [laporan, setLaporan] = useState({
+    report: '',
+  });
   const [msg, setMsg] = useState('');
   const navigate = useNavigate();
   const token = localStorage.getItem('Authorization');
 
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setLaporan({
+      ...laporan,
+      [name]: value,
+    });
+  };
   const handleCreateReport = async (e) => {
     e.preventDefault();
     try {
       const response = await createReport(laporan, token);
       console.log(response);
+      alert('berhasil melaporkan');
     } catch (error) {
       console.log(error);
     }
@@ -29,10 +39,10 @@ const FormLaporan = () => {
             <h3 className="center">Silahkan sampaikan kondisi lingkungan Anda</h3>
           </div>
           <div className="main-section">
-            <Form onSubmit={saveReport}>
+            <Form onSubmit={handleCreateReport}>
               <p className="has-text-centered">{msg}</p>
               <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
-                <Form.Control as="textarea" rows={3} placeholder="Isi laporan Anda disini" type="text" value={report} onChange={(e) => setLaporan(e.target.value)} />
+                <Form.Control as="textarea" rows={3} placeholder="Isi laporan Anda disini" type="text" name="report" value={laporan.report} onChange={handleInputChange} />
               </Form.Group>
               {/* <Form.Group controlId="formFile" className="mb-3">
                 <Form.Control type="file" />

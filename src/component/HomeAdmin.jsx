@@ -1,12 +1,8 @@
-import React from "react";
-import {
-  BsFillArchiveFill,
-  BsFillGrid3X3GapFill,
-  BsPeopleFill,
-  BsFillBellFill,
-} from "react-icons/bs";
+import React from 'react';
+import { BsFillArchiveFill, BsFillGrid3X3GapFill, BsPeopleFill, BsFillBellFill } from 'react-icons/bs';
 // import ListLaporanDb from './ListLaporanDb';
-import ListUserDb from "./ListUserDb";
+import ListUserDb from './ListUserDb';
+import ListLaporanDb from './ListLaporanDb';
 
 const HomeAdmin = () => {
   return (
@@ -45,7 +41,7 @@ const HomeAdmin = () => {
           <h1>42</h1>
         </div>
       </div>
-      {/* <ListLaporanDb /> */}
+      <ListLaporanDb />
       <ListUserDb />
     </main>
   );

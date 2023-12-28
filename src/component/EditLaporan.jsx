@@ -6,44 +6,31 @@ import Modal from 'react-bootstrap/Modal';
 import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
-import axios from 'axios';
+import { getReportById, updateReport } from '../features/authSlices.js';
 
 function MyVerticallyCenteredModal({ show, onHide, reportId }) {
   const [reportDetails, setReportDetails] = useState(null);
-  const [statusLaporan, setStatusLaporan] = useState('');
+  const [token] = useState(localStorage.getItem('Authorization'));
 
   useEffect(() => {
-    const fetchReportDetails = async () => {
-      try {
-        const response = await axios.get(`http://localhost:5000/reports/${reportId}`);
-        setReportDetails(response.data);
-      } catch (error) {
-        console.error('Error fetching report details:', error);
-      }
-    };
-
-    if (show) {
-      fetchReportDetails();
-    }
+    getReportById(reportId, token).then((res) => {
+      setReportDetails(res.data);
+    });
   }, [show, reportId]);
 
-  const handleStatusChange = (e) => {
-    setStatusLaporan(e.target.value); // Memperbarui status_laporan saat terjadi perubahan pada dropdown
-  };
-
-  const updateReportStatus = async (e) => {
+  const handleReportUpdate = async (e) => {
     e.preventDefault();
     try {
-      await axios.patch(`http://localhost:5000/reports/${reportId}`, {
-        report_status: statusLaporan,
-      });
-      console.log(statusLaporan);
+      const updatedReportData = {
+        status: reportDetails.status,
+      };
+      const response = await updateReport(reportId, updatedReportData, token);
+      console.log(response.data);
     } catch (error) {
-      if (error.response) {
-        setMsg(error.response.data.msg);
-      }
+      console.log(error);
     }
   };
+
   return (
     <Modal show={show} onHide={onHide} size="lg" aria-labelledby="contained-modal-title-vcenter" centered>
       <Modal.Header closeButton>
@@ -58,7 +45,7 @@ function MyVerticallyCenteredModal({ show, onHide, reportId }) {
                   Nama
                 </Form.Label>
                 <Col sm="10">
-                  <Form.Control plaintext readOnly defaultValue={`${reportDetails.user.name}`} />
+                  <Form.Control plaintext readOnly defaultValue={`${reportDetails.user.nama}`} />
                 </Col>
               </Form.Group>
               <Form.Group as={Row} className="mb-3" controlId="formPlaintextEmail">
@@ -75,8 +62,8 @@ function MyVerticallyCenteredModal({ show, onHide, reportId }) {
                   Status Laporan
                 </Form.Label>
                 <Col sm="10">
-                  <Form.Select aria-label="Default select example" value={statusLaporan} onChange={handleStatusChange}>
-                    <option>{reportDetails.report_status}</option>
+                  <Form.Select aria-label="Default select example" onChange={(e) => setReportDetails({ ...reportDetails, status: e.target.value })}>
+                    <option>{reportDetails.status}</option>
                     <option value="pending">pending</option>
                     <option value="in-progress">in-progress</option>
                     <option value="selesai">selesai</option>
@@ -89,16 +76,7 @@ function MyVerticallyCenteredModal({ show, onHide, reportId }) {
                   Isi Laporan
                 </Form.Label>
                 <Col sm="10">
-                  <Form.Control as="textarea" rows={3} readOnly defaultValue={`${reportDetails.report_content}`} />
-                </Col>
-              </Form.Group>
-
-              <Form.Group as={Row} className="mb-3" controlId="formPlaintextPassword">
-                <Form.Label column sm="2">
-                  Foto
-                </Form.Label>
-                <Col sm="10">
-                  <Form.Control as="textarea" rows={3} readOnly defaultValue={`${reportDetails.image_url}`} />
+                  <Form.Control as="textarea" rows={3} readOnly defaultValue={`${reportDetails.report}`} />
                 </Col>
               </Form.Group>
             </Form>
@@ -111,7 +89,7 @@ function MyVerticallyCenteredModal({ show, onHide, reportId }) {
         <Button onClick={onHide} className="btn btn-danger btn-sm me-2">
           <AiOutlineClose /> Close
         </Button>
-        <button onClick={updateReportStatus} className="btn btn-primary btn-sm me-2">
+        <button className="btn btn-primary btn-sm me-2" onClick={handleReportUpdate}>
           <CgPen /> Simpan
         </button>
       </Modal.Footer>

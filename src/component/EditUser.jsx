@@ -6,7 +6,7 @@ import Modal from 'react-bootstrap/Modal';
 import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
-import { getUserById } from '../features/authSlices';
+import { getUserById, updateUser } from '../features/authSlices';
 
 function MyVerticallyCenteredModal({ show, onHide, userId }) {
   const [name, setName] = useState('');
@@ -22,28 +22,34 @@ function MyVerticallyCenteredModal({ show, onHide, userId }) {
       setEmail(res.data.email);
       setRole(res.data.role);
     });
-    if (show) {
-      getUserById();
-    }
   }, [show, userId]);
 
-  // const updateUser = async (e) => {
-  //   e.preventDefault();
-  //   try {
-  //     await axios.patch(`http://localhost:5000/users/${userId}`, {
-  //       name: name,
-  //       email: email,
-  //       password: password,
-  //       confPassword: confPassword,
-  //       role: role,
-  //     });
-  //     onHide();
-  //   } catch (error) {
-  //     if (error.response) {
-  //       setMsg(error.response.data.msg);
-  //     }
-  //   }
-  // };
+  const handleUpdateUser = async (e) => {
+    e.preventDefault();
+    try {
+      const updatedUserData = {
+        nama: name,
+        email: email,
+        role: role,
+        // include other fields that need to be updated
+      };
+
+      // Perform the update request
+      const response = await updateUser(userId, updatedUserData, token);
+
+      // Handle successful update, show message, close modal, etc.
+      console.log('User updated:', response.data); // Log the updated user data or handle it as needed
+
+      // You might want to show a success message or close the modal after successful update
+      setMsg('User updated successfully');
+      onHide(); // Close the modal
+    } catch (error) {
+      // Handle error while updating user
+      console.error('Error updating user:', error);
+      setMsg('Error updating user. Please try again.');
+      // You can show an error message or handle the error as needed
+    }
+  };
 
   return (
     <Modal show={show} onHide={onHide} size="lg" aria-labelledby="contained-modal-title-vcenter" centered>
@@ -57,7 +63,7 @@ function MyVerticallyCenteredModal({ show, onHide, userId }) {
               Nama
             </Form.Label>
             <Col sm="10">
-              <Form.Control type="text" value={name} />
+              <Form.Control type="text" onChange={(e) => setName(e.target.value)} value={name} />
             </Col>
           </Form.Group>
           <Form.Group as={Row} className="mb-3" controlId="formPlaintextPassword">
@@ -65,7 +71,7 @@ function MyVerticallyCenteredModal({ show, onHide, userId }) {
               Email
             </Form.Label>
             <Col sm="10">
-              <Form.Control type="text" value={email} />
+              <Form.Control type="text" onChange={(e) => setEmail(e.target.value)} value={email} />
             </Col>
           </Form.Group>
           <Form.Group as={Row} className="mb-3" controlId="formPlaintextPassword">
@@ -73,7 +79,7 @@ function MyVerticallyCenteredModal({ show, onHide, userId }) {
               Role
             </Form.Label>
             <Col sm="10">
-              <Form.Select aria-label="Default select example" value={role}>
+              <Form.Select aria-label="Default select example" onChange={(e) => setRole(e.target.value)} value={role}>
                 <option>{role}</option>
                 <option value="admin">Admin</option>
                 <option value="user">User</option>
@@ -85,7 +91,7 @@ function MyVerticallyCenteredModal({ show, onHide, userId }) {
             <Button onClick={onHide} className="btn btn-danger me-2">
               <AiOutlineClose /> Close
             </Button>
-            <Button type="submit" className="btn btn-primary">
+            <Button type="submit" className="btn btn-primary" onClick={handleUpdateUser}>
               <CgPen /> Simpan
             </Button>
           </div>

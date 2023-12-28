@@ -25,6 +25,7 @@ const ListUser = () => {
 
   const handleDeleteUser = (userId) => {
     const confirmation = window.confirm('Apakah Anda yakin ingin menghapus data ini?');
+    console.log(userId);
     if (confirmation) {
       deleteUser(userId, token, () => {
         alert('User berhasil dihapus');

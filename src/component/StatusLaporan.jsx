@@ -4,24 +4,22 @@ import { IoChatbubblesOutline } from 'react-icons/io5';
 import { Container, Row, Col } from 'react-bootstrap';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
+import { getReport } from '../features/authSlices.js';
 // Import Swiper styles
 import 'swiper/css';
 import 'swiper/css/pagination';
 
 import { Pagination } from 'swiper/modules';
-import axios from 'axios';
 
 const StatusLaporan = () => {
   const [reports, setReports] = useState([]);
+  const token = localStorage.getItem('Authorization');
 
   useEffect(() => {
-    getReports();
+    getReport((data) => {
+      setReports(data);
+    }, token);
   }, []);
-
-  const getReports = async () => {
-    const response = await axios.get('http://localhost:5000/reports');
-    setReports(response.data);
-  };
 
   return (
     <div className="list-komunitas">
@@ -63,13 +61,13 @@ const StatusLaporan = () => {
           >
             {reports.map((report, index) => {
               return (
-                <SwiperSlide key={report.uuid}>
+                <SwiperSlide key={report.id}>
                   <Card className="shadow-sm rounded-4">
                     <Card.Header>Laporan Anda</Card.Header>
                     <Card.Body>
-                      <Card.Title>{report.image_url}</Card.Title>
-                      <Card.Text>{report.report_content}</Card.Text>
-                      <Button variant="primary">{report.report_status}</Button>
+                      <Card.Title>{report.report}</Card.Title>
+                      <Card.Text>{report.user.nama}</Card.Text>
+                      <Button variant="primary">{report.status}</Button>
                     </Card.Body>
                   </Card>
                 </SwiperSlide>

@@ -124,9 +124,83 @@ export const deleteUser = async (id, token, callback) => {
   }
 };
 
+export const updateUser = async (id, userData, token) => {
+  try {
+    const response = await axios.patch(`${API_URL}/api/users/${id}`, userData, {
+      headers: {
+        Authorization: `${token}`,
+      },
+    });
+    return response.data;
+  } catch (error) {
+    throw error.response ? error.response.data : error.message;
+  }
+};
+
+// Report
 export const createReport = async (reportData, token) => {
   try {
     const response = await axios.post(`${API_URL}/api/reports`, reportData, {
+      headers: {
+        Authorization: `${token}`,
+      },
+    });
+    return response.data;
+  } catch (error) {
+    throw error.response ? error.response.data : error.message;
+  }
+};
+
+export const getReport = async (callback, token) => {
+  axios
+    .get(`${API_URL}/api/reports`, {
+      headers: {
+        Authorization: `${token}`,
+      },
+    })
+    .then((res) => {
+      callback(res.data.data);
+    })
+    .catch((error) => {
+      throw error.response ? error.response.data : error.message;
+    });
+};
+
+export const deleteReport = async (id, token, callback) => {
+  console.log(id);
+  try {
+    const response = await axios.delete(`${API_URL}/api/reports/${id}`, {
+      headers: {
+        Authorization: `${token}`,
+      },
+    });
+
+    if (callback) {
+      callback(); // Panggil callback jika penghapusan berhasil
+    }
+
+    return response.data;
+  } catch (error) {
+    throw error.response ? error.response.data : error.message;
+  }
+};
+
+export const getReportById = async (id, token) => {
+  try {
+    const response = await axios.get(`${API_URL}/api/reports/${id}`, {
+      headers: {
+        Authorization: `${token}`,
+      },
+    });
+    return response.data;
+  } catch (error) {
+    throw error.response ? error.response.data : error.message;
+  }
+};
+
+export const updateReport = async (id, reportData, token) => {
+  try {
+    const response = await axios.patch(`${API_URL}/api/reports/${id}`, reportData, {
       headers: {
         Authorization: `${token}`,
       },

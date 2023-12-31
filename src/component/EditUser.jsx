@@ -14,6 +14,7 @@ function MyVerticallyCenteredModal({ show, onHide, userId }) {
   const [password, setPassword] = useState('');
   const [role, setRole] = useState('');
   const [msg, setMsg] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
   const token = localStorage.getItem('Authorization');
 
   useEffect(() => {
@@ -25,6 +26,7 @@ function MyVerticallyCenteredModal({ show, onHide, userId }) {
   }, [show, userId]);
 
   const handleUpdateUser = async (e) => {
+    setIsLoading(true);
     e.preventDefault();
     try {
       const updatedUserData = {
@@ -37,8 +39,8 @@ function MyVerticallyCenteredModal({ show, onHide, userId }) {
       // Perform the update request
       const response = await updateUser(userId, updatedUserData, token);
 
-      // Handle successful update, show message, close modal, etc.
-      console.log('User updated:', response.data); // Log the updated user data or handle it as needed
+      alert('User updated successfully');
+      window.location.reload();
 
       // You might want to show a success message or close the modal after successful update
       setMsg('User updated successfully');
@@ -48,6 +50,8 @@ function MyVerticallyCenteredModal({ show, onHide, userId }) {
       console.error('Error updating user:', error);
       setMsg('Error updating user. Please try again.');
       // You can show an error message or handle the error as needed
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -92,7 +96,7 @@ function MyVerticallyCenteredModal({ show, onHide, userId }) {
               <AiOutlineClose /> Close
             </Button>
             <Button type="submit" className="btn btn-primary" onClick={handleUpdateUser}>
-              <CgPen /> Simpan
+              <CgPen /> {isLoading ? 'Loading...' : 'Update'}
             </Button>
           </div>
         </Form>

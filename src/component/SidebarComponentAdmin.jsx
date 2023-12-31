@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { FaTh, FaBars, FaUserAlt, FaRegChartBar } from 'react-icons/fa';
 import { CgLogOut } from 'react-icons/cg';
 import { AiOutlineUser } from 'react-icons/ai';
+import Button from 'react-bootstrap/Button';
+import Modal from 'react-bootstrap/Modal';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { logoutUser, getMe } from '../features/authSlices';
 import aset from '../assets/react.svg';
@@ -10,15 +12,25 @@ import { Spinner } from 'react-bootstrap';
 const SidebarComponentAdmin = ({ children }) => {
   const [userData, setUserData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [logoutLoading, setLogoutLoading] = useState(false);
   const token = localStorage.getItem('Authorization');
   const handleLogout = async (e) => {
     e.preventDefault();
-    try {
-      await logoutUser(token);
-      alert('Logout success');
-      window.location.href = '/';
-    } catch (error) {
-      console.log(error);
+    const confirmed = window.confirm('Apakah Anda yakin ingin logout?');
+
+    if (confirmed) {
+      setLogoutLoading(true); // Aktifkan loading sebelum logout
+      try {
+        await logoutUser(token);
+        setTimeout(() => {
+          alert('Logout success');
+          window.location.href = '/';
+        }, 0); // Contoh penundaan logout agar pesan alert "Loading" terlihat
+      } catch (error) {
+        console.log(error);
+      } finally {
+        setLogoutLoading(false); // Nonaktifkan loading setelah logout selesai
+      }
     }
   };
 
@@ -63,6 +75,16 @@ const SidebarComponentAdmin = ({ children }) => {
               <div className="link_text">{item.name}</div>
             </NavLink>
           ))}
+          <div className="lg" onClick={handleLogout}>
+            {logoutLoading ? (
+              <Spinner animation="border" variant="primary" />
+            ) : (
+              <div className="icon">
+                <CgLogOut />
+              </div>
+            )}
+            <div className="link_text">Logout</div>
+          </div>
 
           <div className="profile">
             <NavLink>

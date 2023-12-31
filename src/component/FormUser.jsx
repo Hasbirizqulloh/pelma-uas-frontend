@@ -26,7 +26,6 @@ const FormUser = () => {
   const handleAddNewUser = async (e) => {
     e.preventDefault();
     setIsLoading(true);
-
     try {
       const response = await signUpUser(formData);
       setFormData({ nama: '', email: '', password: '', role: '' });

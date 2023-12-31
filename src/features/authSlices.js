@@ -199,6 +199,7 @@ export const getReportById = async (id, token) => {
 };
 
 export const updateReport = async (id, reportData, token) => {
+  console.log('ini adalah id ' + id);
   try {
     const response = await axios.patch(`${API_URL}/api/reports/${id}`, reportData, {
       headers: {

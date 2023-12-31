@@ -10,6 +10,7 @@ import { Spinner } from 'react-bootstrap';
 const ListLaporan = () => {
   const [reports, setReports] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [isLoadingdel, setIsLoadingdel] = useState(false);
   const token = localStorage.getItem('Authorization');
 
   useEffect(() => {
@@ -20,11 +21,11 @@ const ListLaporan = () => {
   }, []);
 
   const handleDeleteReport = (reportId) => {
-    console.log(reportId);
     const confirmation = window.confirm('Apakah Anda yakin ingin menghapus data ini?');
     if (confirmation) {
+      setIsLoadingdel(true);
       deleteReport(reportId, token, () => {
-        alert('User berhasil dihapus');
+        alert('Laporan berhasil dihapus');
         window.location.reload();
         // setNavigate(true);
       });
@@ -49,6 +50,13 @@ const ListLaporan = () => {
             <tr>
               <td colSpan="4" style={{ textAlign: 'center' }}>
                 <Spinner animation="border" variant="primary" />
+              </td>
+            </tr>
+          ) : isLoadingdel ? (
+            <tr>
+              <td colSpan="4" style={{ textAlign: 'center' }}>
+                <Spinner animation="grow" variant="warning" />
+                <p>Deleting report...</p>
               </td>
             </tr>
           ) : (

@@ -9,6 +9,7 @@ import { Spinner } from 'react-bootstrap';
 const ListUser = () => {
   const [users, setUsers] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [deleteLoad, setDeleteLoad] = useState(false);
   const token = localStorage.getItem('Authorization');
   const [navigateTo, setNavigate] = useState(false);
   const navigate = useNavigate();
@@ -28,8 +29,8 @@ const ListUser = () => {
 
   const handleDeleteUser = (userId) => {
     const confirmation = window.confirm('Apakah Anda yakin ingin menghapus data ini?');
-    console.log(userId);
     if (confirmation) {
+      setDeleteLoad(true);
       deleteUser(userId, token, () => {
         alert('User berhasil dihapus');
         window.location.reload();
@@ -63,6 +64,13 @@ const ListUser = () => {
             <tr>
               <td colSpan="5" className="text-center">
                 <Spinner animation="border" variant="primary" />
+              </td>
+            </tr>
+          ) : deleteLoad ? (
+            <tr>
+              <td colSpan="5" style={{ textAlign: 'center' }}>
+                <Spinner animation="grow" variant="warning" />
+                <p>Deleting report...</p>
               </td>
             </tr>
           ) : (

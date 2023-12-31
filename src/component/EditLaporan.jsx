@@ -6,10 +6,12 @@ import Modal from 'react-bootstrap/Modal';
 import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
+import { Spinner } from 'react-bootstrap';
 import { getReportById, updateReport } from '../features/authSlices.js';
 
 function MyVerticallyCenteredModal({ show, onHide, reportId }) {
   const [reportDetails, setReportDetails] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
   const [token] = useState(localStorage.getItem('Authorization'));
 
   useEffect(() => {
@@ -19,13 +21,17 @@ function MyVerticallyCenteredModal({ show, onHide, reportId }) {
   }, [show, reportId]);
 
   const handleReportUpdate = async (e) => {
+    setIsLoading(true);
     e.preventDefault();
     try {
       const updatedReportData = {
         status: reportDetails.status,
       };
       const response = await updateReport(reportId, updatedReportData, token);
-      console.log(response.data);
+      response.data;
+      setIsLoading(false);
+      alert('Report updated successfully');
+      window.location.reload();
     } catch (error) {
       console.log(error);
     }
@@ -82,7 +88,7 @@ function MyVerticallyCenteredModal({ show, onHide, reportId }) {
             </Form>
           </div>
         ) : (
-          <p>Loading...</p>
+          <Spinner animation="grow" variant="primary" />
         )}
       </Modal.Body>
       <Modal.Footer>
@@ -90,7 +96,7 @@ function MyVerticallyCenteredModal({ show, onHide, reportId }) {
           <AiOutlineClose /> Close
         </Button>
         <button className="btn btn-primary btn-sm me-2" onClick={handleReportUpdate}>
-          <CgPen /> Simpan
+          <CgPen /> {isLoading ? 'Menyimpan...' : 'Simpan'}
         </button>
       </Modal.Footer>
     </Modal>

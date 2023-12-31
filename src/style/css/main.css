@@ -213,6 +213,23 @@
 .link_text {
   font-size: 20px;
 }
+
+.sidebar .list-section .lg {
+  display: flex;
+  color: #fff;
+  text-decoration: none;
+  padding: 10px 15px;
+  margin-top: 20px;
+  gap: 15px;
+  transition: all 0.5s;
+  cursor: pointer;
+}
+.sidebar .list-section .lg:hover {
+  background: lightskyblue;
+  color: #000;
+  transition: all 0.5s;
+}
+
 .sidebar .list-section .profile {
   position: fixed;
   height: 60px;

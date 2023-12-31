@@ -4,18 +4,30 @@ import { CgLogOut } from 'react-icons/cg';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { logoutUser, getMe } from '../features/authSlices';
 import aset from '../assets/react.svg';
+import { Spinner } from 'react-bootstrap';
 
 const SidebarComponent = ({ children }) => {
   const [userData, setUserData] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [logoutLoading, setLogoutLoading] = useState(false);
   const token = localStorage.getItem('Authorization');
   const handleLogout = async (e) => {
     e.preventDefault();
-    try {
-      await logoutUser(token);
-      alert('Logout success');
-      window.location.href = '/';
-    } catch (error) {
-      console.log(error);
+    const confirmed = window.confirm('Apakah Anda yakin ingin logout?');
+
+    if (confirmed) {
+      setLogoutLoading(true); // Aktifkan loading sebelum logout
+      try {
+        await logoutUser(token);
+        setTimeout(() => {
+          alert('Logout success');
+          window.location.href = '/';
+        }, 0); // Contoh penundaan logout agar pesan alert "Loading" terlihat
+      } catch (error) {
+        console.log(error);
+      } finally {
+        setLogoutLoading(false); // Nonaktifkan loading setelah logout selesai
+      }
     }
   };
 
@@ -45,6 +57,7 @@ const SidebarComponent = ({ children }) => {
   useEffect(() => {
     getMe(token).then((res) => {
       setUserData(res.data);
+      setIsLoading(false);
     });
   });
 
@@ -65,13 +78,30 @@ const SidebarComponent = ({ children }) => {
             </NavLink>
           ))}
 
+          <div className="lg" onClick={handleLogout}>
+            {logoutLoading ? (
+              <Spinner animation="border" variant="primary" />
+            ) : (
+              <div className="icon">
+                <CgLogOut />
+              </div>
+            )}
+            <div className="link_text">Logout</div>
+          </div>
+
           <div className="profile">
             <NavLink>
               <div className="profile-details">
                 {/* <img src={aset} alt="" /> */}
                 <div className="name_job">
-                  <div className="name">{userData.nama}</div>
-                  <div className="job">Poin: 0</div>
+                  {isLoading ? (
+                    <Spinner animation="border" variant="primary" />
+                  ) : (
+                    <>
+                      <div className="name">{userData && userData.nama}</div>
+                      <div className="job">{userData && userData.role}</div>
+                    </>
+                  )}
                 </div>
               </div>
             </NavLink>

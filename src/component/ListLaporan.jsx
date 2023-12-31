@@ -48,13 +48,13 @@ const ListLaporan = () => {
         <tbody>
           {isLoading ? (
             <tr>
-              <td colSpan="4" style={{ textAlign: 'center' }}>
+              <td colSpan="5" style={{ textAlign: 'center' }}>
                 <Spinner animation="border" variant="primary" />
               </td>
             </tr>
           ) : isLoadingdel ? (
             <tr>
-              <td colSpan="4" style={{ textAlign: 'center' }}>
+              <td colSpan="5" style={{ textAlign: 'center' }}>
                 <Spinner animation="grow" variant="warning" />
                 <p>Deleting report...</p>
               </td>

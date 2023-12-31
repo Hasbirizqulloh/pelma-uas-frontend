@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { IoChatbubblesOutline } from 'react-icons/io5';
-import { Container, Row, Col } from 'react-bootstrap';
+import { Container, Row, Col, Spinner } from 'react-bootstrap';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import { getReport } from '../features/authSlices.js';
@@ -10,14 +10,17 @@ import 'swiper/css';
 import 'swiper/css/pagination';
 
 import { Pagination } from 'swiper/modules';
+import DetailLaporan from './DetailLaporan.jsx';
 
 const StatusLaporan = () => {
   const [reports, setReports] = useState([]);
+  const [isLoading, setIsloading] = useState(true);
   const token = localStorage.getItem('Authorization');
 
   useEffect(() => {
     getReport((data) => {
       setReports(data);
+      setIsloading(false);
     }, token);
   }, []);
 
@@ -32,6 +35,7 @@ const StatusLaporan = () => {
           </Col>
         </Row>
         <Row>
+          {isLoading ? <Spinner animation="border" variant="primary" /> : reports.length === 0 ? <h1 className="text-center">Tidak ada laporan</h1> : null}
           <Swiper
             slidesPerView={1}
             spaceBetween={10}
@@ -65,9 +69,12 @@ const StatusLaporan = () => {
                   <Card className="shadow-sm rounded-4">
                     <Card.Header>Laporan Anda</Card.Header>
                     <Card.Body>
-                      <Card.Title>{report.report}</Card.Title>
-                      <Card.Text>{report.user.nama}</Card.Text>
-                      <Button variant="primary">{report.status}</Button>
+                      <Card.Text>Nama : {report.user.nama}</Card.Text>
+                      <Card.Title>
+                        <DetailLaporan reportId={report.id} />
+                      </Card.Title>
+                      <Card.Text>Status Laporan</Card.Text>
+                      <Button variant="primary"> {report.status}</Button>
                     </Card.Body>
                   </Card>
                 </SwiperSlide>

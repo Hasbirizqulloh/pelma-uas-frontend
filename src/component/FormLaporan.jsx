@@ -10,6 +10,7 @@ const FormLaporan = () => {
     report: '',
   });
   const [msg, setMsg] = useState('');
+  const [isLoading, setIsloading] = useState(false);
   const navigate = useNavigate();
   const token = localStorage.getItem('Authorization');
 
@@ -22,12 +23,15 @@ const FormLaporan = () => {
   };
   const handleCreateReport = async (e) => {
     e.preventDefault();
+    setIsloading(true);
     try {
       const response = await createReport(laporan, token);
       console.log(response);
       alert('berhasil melaporkan');
     } catch (error) {
       console.log(error);
+    } finally {
+      setIsloading(false);
     }
   };
 
@@ -48,7 +52,7 @@ const FormLaporan = () => {
                 <Form.Control type="file" />
               </Form.Group> */}
               <Button variant="primary" type="submit">
-                Submit
+                {isLoading ? 'Melaporkan' : 'submit'}
               </Button>
             </Form>
           </div>

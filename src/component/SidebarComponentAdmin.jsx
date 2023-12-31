@@ -2,8 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { FaTh, FaBars, FaUserAlt, FaRegChartBar } from 'react-icons/fa';
 import { CgLogOut } from 'react-icons/cg';
 import { AiOutlineUser } from 'react-icons/ai';
-import Button from 'react-bootstrap/Button';
-import Modal from 'react-bootstrap/Modal';
+
 import { NavLink, useNavigate } from 'react-router-dom';
 import { logoutUser, getMe } from '../features/authSlices';
 import aset from '../assets/react.svg';

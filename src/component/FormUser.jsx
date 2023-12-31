@@ -29,16 +29,16 @@ const FormUser = () => {
 
     try {
       const response = await signUpUser(formData);
-      console.log('Add user successful:', response);
       setFormData({ nama: '', email: '', password: '', role: '' });
       setIsLoading(false);
       navigate('/useradmin');
       alert('User Berhasil ditambahkan');
     } catch (error) {
       setIsLoading(false);
-      setIsError(true);
       console.error('Add user error:', error);
-      alert('Add user failed. Please try again.');
+      alert('Add user failed ' + error.errors);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -92,7 +92,7 @@ const FormUser = () => {
               <button className="btn btn-danger" onClick={goBack}>
                 Kembali
               </button>
-              <button className="btn btn-primary">Tambah Data</button>
+              <button className="btn btn-primary">{isLoading ? 'Menambahkan...' : 'Simpan'}</button>
             </div>
           </Form>
         </Row>

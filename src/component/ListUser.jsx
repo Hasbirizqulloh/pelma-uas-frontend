@@ -4,9 +4,11 @@ import Table from 'react-bootstrap/Table';
 import { getUsers, deleteUser } from '../features/authSlices.js';
 import { CgMathPlus, CgPen, CgTrash } from 'react-icons/cg';
 import EditUser from './EditUser';
+import { Spinner } from 'react-bootstrap';
 
 const ListUser = () => {
   const [users, setUsers] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
   const token = localStorage.getItem('Authorization');
   const [navigateTo, setNavigate] = useState(false);
   const navigate = useNavigate();
@@ -20,6 +22,7 @@ const ListUser = () => {
   useEffect(() => {
     getUsers((data) => {
       setUsers(data);
+      setIsLoading(false);
     }, token);
   }, [token]);
 
@@ -56,8 +59,14 @@ const ListUser = () => {
           </tr>
         </thead>
         <tbody>
-          {users.map((user, index) => {
-            return (
+          {isLoading ? (
+            <tr>
+              <td colSpan="5" className="text-center">
+                <Spinner animation="border" variant="primary" />
+              </td>
+            </tr>
+          ) : (
+            users.map((user, index) => (
               <tr key={user.userId}>
                 <td>{index + 1}</td>
                 <td>{user.nama}</td>
@@ -70,8 +79,8 @@ const ListUser = () => {
                   </button>
                 </td>
               </tr>
-            );
-          })}
+            ))
+          )}
         </tbody>
       </Table>
     </div>

@@ -5,9 +5,11 @@ import { AiOutlineUser } from 'react-icons/ai';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { logoutUser, getMe } from '../features/authSlices';
 import aset from '../assets/react.svg';
+import { Spinner } from 'react-bootstrap';
 
 const SidebarComponentAdmin = ({ children }) => {
   const [userData, setUserData] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
   const token = localStorage.getItem('Authorization');
   const handleLogout = async (e) => {
     e.preventDefault();
@@ -41,6 +43,7 @@ const SidebarComponentAdmin = ({ children }) => {
   useEffect(() => {
     getMe(token).then((res) => {
       setUserData(res.data);
+      setIsLoading(false);
     });
   });
 
@@ -66,8 +69,14 @@ const SidebarComponentAdmin = ({ children }) => {
               <div className="profile-details">
                 <img src={aset} alt="" />
                 <div className="name_job">
-                  <div className="name">{userData && userData.nama}</div>
-                  <div className="job">{userData && userData.role}</div>
+                  {isLoading ? (
+                    <Spinner animation="border" variant="primary" />
+                  ) : (
+                    <>
+                      <div className="name">{userData && userData.nama}</div>
+                      <div className="job">{userData && userData.role}</div>
+                    </>
+                  )}
                 </div>
               </div>
             </NavLink>

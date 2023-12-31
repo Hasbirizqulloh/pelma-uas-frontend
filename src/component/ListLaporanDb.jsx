@@ -4,14 +4,17 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { CgDetailsMore, CgTrash } from 'react-icons/cg';
 import { getReport } from '../features/authSlices.js';
+import { Spinner } from 'react-bootstrap';
 
 const ListLaporanDb = () => {
   const [reports, setReports] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
   const token = localStorage.getItem('Authorization');
 
   useEffect(() => {
     getReport((data) => {
       setReports(data);
+      setIsLoading(false);
     }, token);
   }, []);
 
@@ -28,8 +31,14 @@ const ListLaporanDb = () => {
           </tr>
         </thead>
         <tbody>
-          {reports.map((report, index) => {
-            return (
+          {isLoading ? (
+            <tr>
+              <td colSpan="4" style={{ textAlign: 'center' }}>
+                <Spinner animation="border" variant="primary" />
+              </td>
+            </tr>
+          ) : (
+            reports.map((report, index) => (
               <tr key={report.id}>
                 <td>{index + 1}</td>
                 <td>{report.user.nama}</td>
@@ -40,8 +49,8 @@ const ListLaporanDb = () => {
                   </Badge>
                 </td>
               </tr>
-            );
-          })}
+            ))
+          )}
         </tbody>
       </Table>
     </div>

@@ -5,14 +5,17 @@ import { Link } from 'react-router-dom';
 import { CgTrash } from 'react-icons/cg';
 import { getReport, deleteReport } from '../features/authSlices.js';
 import EditLaporan from './EditLaporan';
+import { Spinner } from 'react-bootstrap';
 
 const ListLaporan = () => {
   const [reports, setReports] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
   const token = localStorage.getItem('Authorization');
 
   useEffect(() => {
     getReport((data) => {
       setReports(data);
+      setIsLoading(false);
     }, token);
   }, []);
 
@@ -42,8 +45,14 @@ const ListLaporan = () => {
           </tr>
         </thead>
         <tbody>
-          {reports.map((report, index) => {
-            return (
+          {isLoading ? (
+            <tr>
+              <td colSpan="4" style={{ textAlign: 'center' }}>
+                <Spinner animation="border" variant="primary" />
+              </td>
+            </tr>
+          ) : (
+            reports.map((report, index) => (
               <tr key={report.id}>
                 <td>{index + 1}</td>
                 <td>{report.user.nama}</td>
@@ -53,7 +62,6 @@ const ListLaporan = () => {
                     {report.status}
                   </Badge>
                 </td>
-
                 <td>
                   <EditLaporan reportId={report.id} />
                   <button className="btn btn-danger btn-sm" onClick={() => handleDeleteReport(report.id)}>
@@ -61,8 +69,8 @@ const ListLaporan = () => {
                   </button>
                 </td>
               </tr>
-            );
-          })}
+            ))
+          )}
         </tbody>
       </Table>
     </div>

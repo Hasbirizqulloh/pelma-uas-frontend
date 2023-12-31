@@ -39,9 +39,8 @@ const Login = () => {
         alert('Login failed');
       }
     } catch (error) {
-      // Handle login error
-      setIsError(true);
-      setMessage(error);
+      alert('Username or password is incorrect');
+      navigate('/'); // or any other route you want to redirect to
     } finally {
       // Hide loading state
       setIsLoading(false);
